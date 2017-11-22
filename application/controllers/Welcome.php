@@ -20,6 +20,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dd = User::all(); // will fetch all users
+		var_dump($dd);die();
 		$this->load->view('welcome_message');
 	}
 }
