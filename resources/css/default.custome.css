@@ -1,0 +1,5 @@
+#nprogress .spinner {
+    display: none !important;
+}
+
+.bg-white { background-color: #fff; }
