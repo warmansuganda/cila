@@ -10,4 +10,9 @@ class Login extends MX_Controller
     {
     	$this->slice->view("backend/login/index");
     }
+
+    public function auth()
+    {
+    	dump([1,2,2]);
+    }
 }

@@ -10,7 +10,7 @@
     <h2 style="border-left: 4px solid #126a99;padding-left: 15px;color: #126a99;">Sign in</h2>
     <p class="login-box-msg">Sign in to start your session</p>
 
-    {{ form_open('backend/login/auth') }}
+    {{ form_open('auth') }}
       <div class="form-group has-feedback">
         <input name="username" type="email" class="form-control" placeholder="Email">
         <span class="fa fa-envelope form-control-feedback"></span>
