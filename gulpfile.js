@@ -20,26 +20,32 @@ elixir(function(mix) {
 
     mix.styles([
         // Vendor
-        'node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/font-awesome/css/font-awesome.min.css',
-        'node_modules/ionicons/dist/css/ionicons.min.css',
-        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
-        'node_modules/icheck/skins/square/blue.css',
-        'node_modules/nprogress/nprogress.css',
+        'bower_components/bootstrap/dist/css/bootstrap.min.css',
+        'bower_components/font-awesome/css/font-awesome.min.css',
+        'bower_components/Ionicons/css/ionicons.min.css',
+        'bower_components/admin-lte/dist/css/AdminLTE.min.css',
+        'bower_components/iCheck/skins/square/blue.css',
+        'bower_components/nprogress/nprogress.css',
+
+        'resources/css/fonts-googleapis.min.css',
+        'resources/css/default.custome.css',
+        'resources/css/login.custome.css',
 
     ], 'public/assets/css/login.min.css', './');
 
     mix.scripts([
         // Vendor
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/icheck/icheck.min.js',
-        'node_modules/nprogress/nprogress.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/iCheck/icheck.min.js',
+        'bower_components/nprogress/nprogress.js',
     ], 'public/assets/js/login.min.js', './');
 
-    mix.copy('node_modules/font-awesome/fonts', 'assets/fonts');
-    mix.copy('node_modules/ionicons/dist/fonts', 'assets/fonts');
-    mix.copy('node_modules/icheck/skins/square/blue.png', 'assets/css');
+    mix.copy('bower_components/font-awesome/fonts', 'assets/fonts');
+    mix.copy('bower_components/Ionicons/fonts', 'assets/fonts');
+    mix.copy('bower_components/iCheck/skins/square/blue.png', 'assets/css');
+    mix.copy('resources/img', 'assets/img');
+    mix.copy('resources/fonts', 'assets/fonts');
 
     /*
      |--------------------------------------------------------------------------
@@ -49,21 +55,27 @@ elixir(function(mix) {
 
     mix.styles([
         // Vendor
-        'node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/nprogress/nprogress.css',
-
+        'bower_components/bootstrap/dist/css/bootstrap.min.css',
+        'bower_components/font-awesome/css/font-awesome.min.css',
+        'bower_components/Ionicons/css/ionicons.min.css',
+        'bower_components/admin-lte/dist/css/AdminLTE.min.css',
+        'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
+        'bower_components/iCheck/skins/square/blue.css',
+        'bower_components/nprogress/nprogress.css',
+        
+        'resources/css/default.custome.css',
         'resources/css/main.custome.css',
 
     ], 'public/assets/css/main.min.css', './');
 
     mix.scripts([
       // Vendor
-      'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/nprogress/nprogress.js',
+      'bower_components/jquery/dist/jquery.min.js',
+      'bower_components/bootstrap/dist/js/bootstrap.min.js',
+      'bower_components/iCheck/icheck.min.js',
+      'bower_components/nprogress/nprogress.js',
 
     ], 'public/assets/js/main.min.js', './');
-
-    // // mix.copy('themes/backend/adminlte/libs/ionicons/fonts', 'themes/backend/adminlte/fonts');
 
     mix.version([
       'assets/css/login.min.css',

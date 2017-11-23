@@ -7,16 +7,16 @@
 @section('content')
 <!-- /.login-logo -->
 <div class="col col-md-12">
-    <h1>Signin</h1>
+    <h2 style="border-left: 4px solid #126a99;padding-left: 15px;color: #126a99;">Sign in</h2>
     <p class="login-box-msg">Sign in to start your session</p>
 
     <form action="../../index2.html" method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input name="username" type="email" class="form-control" placeholder="Email">
         <span class="fa fa-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input name="password" type="password" class="form-control" placeholder="Password">
         <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -34,6 +34,11 @@
         <!-- /.col -->
       </div>
     </form>
+
+    <div class="social-auth-links text-center">
+      <br><br>
+      <p style="font-size: 11px;"> Copyright &copy; 2017 <br> PT. Bandara Internasional Jawa Barat</p>
+    </div>
 </div>
 <!-- /.login-box-body -->
 @endsection

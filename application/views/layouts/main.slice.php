@@ -7,31 +7,33 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="{{ elixir('assets/css/main.min.css') }}">
-	<style type="text/css">
-		#nprogress .spinner {
-			display: none !important;
-		}
-	</style>
 	@yield('css')
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<!-- Header -->
-		@include('partials.header')
+		<header class="main-header">
+			@include('partials.header')
+		</header>
 
 	    <!-- Sidebar -->
-	    <nav id="sidebar">
-	    	@include('partials.sidebar')
-	    </nav>
+	    <!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+		    <!-- sidebar: style can be found in sidebar.less -->
+		    <section class="sidebar">
+	    		@include('partials.sidebar')
+	    	</section>
+	    </aside>
 
-	    <!-- Page Content -->
-	    <div id="content">
+	    <!-- Content Wrapper. Contains page content -->
+  		<div class="content-wrapper">
 	        <!-- We'll fill this with dummy content -->
 	        @yield('content')
 	    </div>
 
-	    @include('partials.footer')
-
+	    <footer class="main-footer">
+		    @include('partials.footer')
+		</footer>
 	</div> 
 
 	<script type="text/javascript" src="{{ elixir('assets/js/main.min.js') }}"></script>

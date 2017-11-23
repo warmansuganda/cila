@@ -4,19 +4,14 @@
   "description": "What is CodeIgniter ###################",
   "main": "index.js",
   "dependencies": {
-    "admin-lte": "^2.4.2",
-    "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
-    "icheck": "^1.0.2",
-    "ionicons": "^3.0.0",
-    "jquery": "^3.2.1",
-    "laravel-elixir": "^6.0.0-16",
-    "nprogress": "^0.2.0"
+    "laravel-elixir": "^6.0.0-16"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ensure": "npm install && bower install",
+    "build": "gulp --production"
   },
   "repository": {
     "type": "git",
