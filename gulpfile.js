@@ -23,9 +23,10 @@ elixir(function(mix) {
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/Ionicons/css/ionicons.min.css',
+        'bower_components/nprogress/nprogress.css',
+
         'bower_components/admin-lte/dist/css/AdminLTE.min.css',
         'bower_components/iCheck/skins/square/blue.css',
-        'bower_components/nprogress/nprogress.css',
 
         'resources/css/fonts-googleapis.min.css',
         'resources/css/default.custome.css',
@@ -58,11 +59,16 @@ elixir(function(mix) {
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/Ionicons/css/ionicons.min.css',
-        'bower_components/admin-lte/dist/css/AdminLTE.min.css',
-        'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
         'bower_components/iCheck/skins/square/blue.css',
         'bower_components/nprogress/nprogress.css',
+        'bower_components/bootstrap-daterangepicker/daterangepicker.css',
+        'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+        'bower_components/select2/dist/css/select2.min.css',
+
+        'bower_components/admin-lte/dist/css/AdminLTE.min.css',
+        'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
         
+        'resources/css/fonts-googleapis.min.css',
         'resources/css/default.custome.css',
         'resources/css/main.custome.css',
 
@@ -74,6 +80,21 @@ elixir(function(mix) {
       'bower_components/bootstrap/dist/js/bootstrap.min.js',
       'bower_components/iCheck/icheck.min.js',
       'bower_components/nprogress/nprogress.js',
+      'bower_components/select2/dist/js/select2.js',
+      'bower_components/moment/min/moment.min.js',
+      'bower_components/bootstrap-daterangepicker/daterangepicker.js',
+      'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+      'bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
+      'bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
+      'bower_components/fastclick/lib/fastclick.js',
+
+      'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.js',
+      'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.date.extensions.js',
+      'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.extensions.js',
+      'bower_components/admin-lte/plugins/timepicker/bootstrap-timepicker.min.js',
+
+      'bower_components/admin-lte/dist/js/adminlte.min.js',
+      'bower_components/admin-lte/dist/js/demo.js',
 
     ], 'public/assets/js/main.min.js', './');
 
