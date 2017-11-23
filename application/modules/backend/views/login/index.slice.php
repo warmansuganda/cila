@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('content')
-	Welcome to Application
+	{{ "Hello World, from slice view login" }}
 @endsection

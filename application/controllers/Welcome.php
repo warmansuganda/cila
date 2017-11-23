@@ -20,8 +20,6 @@ class Welcome extends MX_Controller {
 	 */
 	public function index()
 	{
-		$dd = User::count(); // will fetch all users
-		// var_dump($dd);die();
 		$this->slice->view('welcome_message');
 	}
 }

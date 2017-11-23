@@ -4,8 +4,11 @@
   "description": "What is CodeIgniter ###################",
   "main": "index.js",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "gulp": "^3.9.1",
-    "laravel-elixir": "^6.0.0-16"
+    "jquery": "^3.2.1",
+    "laravel-elixir": "^6.0.0-16",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {},
   "scripts": {
