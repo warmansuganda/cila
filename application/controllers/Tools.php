@@ -83,9 +83,11 @@ class Migration_$name extends CI_Migration {
     public function up() {
         if (!Capsule::schema()->hasTable('$table_name')) {
             Capsule::schema()->create('$table_name', function (\$table) {
-                \$table->increments('id');
+                \$table->uuid('id');
                 \$table->string('name')->unique();
                 \$table->timestamps();
+
+                \$table->primary('id');
             });
         }
     }
