@@ -21,5 +21,19 @@ class Welcome extends MX_Controller {
 	public function index()
 	{
 		$this->slice->view('welcome_message');
+		// $data = [
+  //           // 'id'          => '9bfac102-d136-11e7-8941-cec278b6b50a',
+  //           'name'        => 'admin',
+  //           'description' => 'Administrato',
+  //       ];
+
+  //       // $model = new \GroupsModel();
+  //       // // $model->id = "asdf";
+  //       // $model->name = "asdf";
+  //       // $model->description = "asdf";
+  //       // $model->save();
+  //       \GroupsModel::boot();
+  //       \GroupsModel::create($data);
+		// echo \GroupsModel::count();
 	}
 }

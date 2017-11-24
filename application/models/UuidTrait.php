@@ -8,7 +8,7 @@ trait UuidTrait
     /**
      * Boot function from laravel.
      */
-    protected static function boot()
+    public static function boot()
     {
         parent::boot();
 

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Container\Container;
 
 class EloquentHook {
 
@@ -52,6 +54,8 @@ class EloquentHook {
 		   	'collation' => $config->dbcollat,
 		   	'prefix'    => $config->dbprefix,
 		]);
+
+		$capsule->setEventDispatcher(new Dispatcher(new Container));
 
 		$capsule->setAsGlobal();
 		$capsule->bootEloquent();

@@ -7,12 +7,10 @@ class Migration_groups extends CI_Migration {
     public function up() {
         if (!Capsule::schema()->hasTable('groups')) {
             Capsule::schema()->create('groups', function ($table) {
-                $table->uuid('id');
+                $table->uuid('id')->primary();
                 $table->string('name', 20)->unique();
-                $table->string('description', 100);
+                $table->string('description', 100)->nullable();
                 $table->timestamps();
-
-                $table->primary('id');
             });
         }
     }

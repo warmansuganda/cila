@@ -60,7 +60,6 @@ class Tools extends CI_Controller {
 
     public function seed($name) {
         $seeder = new Seeder();
-
         $seeder->call($name);
     }
 
@@ -83,11 +82,10 @@ class Migration_$name extends CI_Migration {
     public function up() {
         if (!Capsule::schema()->hasTable('$table_name')) {
             Capsule::schema()->create('$table_name', function (\$table) {
-                \$table->uuid('id');
+                \$table->uuid('id')->primary();
                 \$table->string('name')->unique();
+                \$table->string('description')->nullable();
                 \$table->timestamps();
-
-                \$table->primary('id');
             });
         }
     }
@@ -164,6 +162,11 @@ class $name extends Seeder {
         $camelcase = ucwords($table, "_");
         $name = str_replace('_', '', $camelcase) . 'Model';
 
+        $dir = '-models';
+        if (substr($path, -7) != $dir) {
+            $path .= $dir;
+        }
+
         $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
 
         $my_model = fopen($path, "w") or die("Unable to create seed file!");
@@ -187,7 +190,7 @@ class $name extends Eloquent {
 
     use UuidTrait;
 
-    public \$incrementing = false; // Indicates if the IDs are auto-incrementing.
+    public \$incrementing = false;
     protected \$table = '$table'; // Table name
     protected \$fillable = [$join_fillable]; // Defining Fillable Attributes On A Model
 

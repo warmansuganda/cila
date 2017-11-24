@@ -23,7 +23,5 @@ class UsersSeeder extends Seeder {
         ];
 
         UsersModel::create($data);
-
-        echo PHP_EOL;
     }
 }
