@@ -1,6 +1,6 @@
 {
-  "assets/css/login.min.css": "assets/css/login-f6c3335681.min.css",
-  "assets/css/main.min.css": "assets/css/main-cf63d60f51.min.css",
-  "assets/js/login.min.js": "assets/js/login-f74285813b.min.js",
-  "assets/js/main.min.js": "assets/js/main-5a8e0ce891.min.js"
+  "assets/css/main.min.css": "assets/css/main-0dac223b72.min.css",
+  "assets/css/signin.min.css": "assets/css/signin-f6c3335681.min.css",
+  "assets/js/main.min.js": "assets/js/main-5a8e0ce891.min.js",
+  "assets/js/signin.min.js": "assets/js/signin-f74285813b.min.js"
 }

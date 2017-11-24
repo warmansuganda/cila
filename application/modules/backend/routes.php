@@ -1,3 +1,3 @@
 <?php
 
-	$route['auth'] = 'backend/login/auth';
+$route['signin'] = 'backend/auth/signin';

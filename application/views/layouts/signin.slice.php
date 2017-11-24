@@ -6,7 +6,7 @@
     <title>@yield('title')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css" href="{{ elixir('assets/css/login.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ elixir('assets/css/signin.min.css') }}">
     @yield('css')
 </head>
 <body id="login">
@@ -45,7 +45,7 @@
             @yield('content')
         </div>
     </div>
-    <script type="text/javascript" src="{{ elixir('assets/js/login.min.js') }}"></script>
+    <script type="text/javascript" src="{{ elixir('assets/js/signin.min.js') }}"></script>
     <script type="text/javascript">
         NProgress.start();
     </script>

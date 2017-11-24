@@ -30,9 +30,9 @@ elixir(function(mix) {
 
         'resources/css/fonts-googleapis.min.css',
         'resources/css/default.custome.css',
-        'resources/css/login.custome.css',
+        'resources/css/signin.custome.css',
 
-    ], 'public/assets/css/login.min.css', './');
+    ], 'public/assets/css/signin.min.css', './');
 
     mix.scripts([
         // Vendor
@@ -40,7 +40,7 @@ elixir(function(mix) {
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
         'bower_components/iCheck/icheck.min.js',
         'bower_components/nprogress/nprogress.js',
-    ], 'public/assets/js/login.min.js', './');
+    ], 'public/assets/js/signin.min.js', './');
 
     mix.copy('bower_components/font-awesome/fonts', 'assets/fonts');
     mix.copy('bower_components/Ionicons/fonts', 'assets/fonts');
@@ -99,8 +99,8 @@ elixir(function(mix) {
     ], 'public/assets/js/main.min.js', './');
 
     mix.version([
-      'assets/css/login.min.css',
-      'assets/js/login.min.js',
+      'assets/css/signin.min.css',
+      'assets/js/signin.min.js',
       'assets/css/main.min.css',
       'assets/js/main.min.js',
     ], './');
