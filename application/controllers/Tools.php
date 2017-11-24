@@ -114,17 +114,15 @@ class Migration_$name extends CI_Migration {
 
 class $name extends Seeder {
 
-    private \$table = 'users';
-
     public function run() {
         \$this->db->truncate(\$this->table);
 
         //seed records manually
         \$data = [
-            'user_name' => 'admin',
+            'name' => 'admin',
             'password' => '9871'
         ];
-        \$this->db->insert(\$this->table, \$data);
+        UserModel::create(\$data);
 
         //seed many records using faker
         \$limit = 33;
@@ -134,11 +132,11 @@ class $name extends Seeder {
             echo \".\";
 
             \$data = array(
-                'user_name' => \$this->faker->unique()->userName,
+                'name' => \$this->faker->unique()->userName,
                 'password' => '1234',
             );
 
-            \$this->db->insert(\$this->table, \$data);
+            UserModel::create(\$data);
         }
 
         echo PHP_EOL;
