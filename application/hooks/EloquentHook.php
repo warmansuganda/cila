@@ -34,6 +34,14 @@ class EloquentHook {
 		return $this->instance->db;
 	}
 
+	private function getDriver($dbdriver = '')
+	{
+		if ($dbdriver == 'mysqli') {
+			return 'mysql';
+		}
+		return $dbdriver;
+	}
+
 	public function bootEloquent() {
 
 		$this->setInstance();
@@ -45,7 +53,7 @@ class EloquentHook {
 		$capsule = new Capsule;
 
 		$capsule->addConnection([
-			'driver'    => 'mysql',
+			'driver'    => $this->getDriver($config->dbdriver),
 		    'host'      => $config->hostname,
 		    'database'  => $config->database,
 		    'username'  => $config->username,

@@ -8,16 +8,15 @@ class AuthRepository extends BaseRepository {
         $this->processor = new AuthProcessor();
     }
 
-    public function getInput(array $request) {
-        $this->username = $request['username'];
-        $this->password = $request['password'];
-    }
-
-    public function setValidationData() {
+    public function getInput($request) {
         $this->data = [
-            'username' => $this->username,
-            'password' => $this->password,
+            'username'   => $request('username'),
+            'password'   => $request('password'),
+            'ip_address' => $request('ip_address'),
+            'user_agent' => $request('user_agent'),
+            'remember'   => $request('remember')
         ];
+
     }
 
     public function setValidationRules() {
@@ -27,15 +26,12 @@ class AuthRepository extends BaseRepository {
                 [
                     'field' => 'username',
                     'label' => 'Username',
-                    'rules' => [
-                        'required',
-                        'valid_email'
-                    ]
+                    'rules' => 'required'
                 ],
                 [
                     'field' => 'password',
                     'label' => 'Password',
-                    'rules' => 'required',
+                    'rules' => 'required'
                 ],
             ];
 

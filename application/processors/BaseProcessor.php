@@ -3,10 +3,11 @@
 abstract class BaseProcessor
 {
 	protected $output;
-	
+	protected $ci;
+
 	public function __construct()
 	{
-		# code...
+		$this->ci = &get_instance();
 	}
 
 	abstract public function setProcessor(string $operation_type, array $data); 

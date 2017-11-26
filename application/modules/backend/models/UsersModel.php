@@ -26,4 +26,13 @@ class UsersModel extends Eloquent {
         'phone',
     ]; // Defining Fillable Attributes On A Model
 
+    public function login_attempts()
+    {
+        return $this->hasMany('\LoginAttemptsModel', 'user_id');
+    }
+
+    public function token()
+    {
+        return $this->hasMany('\UsersTokensModel', 'user_id');
+    }
 }

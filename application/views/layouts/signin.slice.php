@@ -33,7 +33,7 @@
         <div class="col col-md-8 col-sm-6">
             <img class="img-responsive" src="{{ base_url() }}assets/img/scetch_bijb.jpg">
             <div class="apps-information">
-                <h1 class="title">Finance Application</h1>
+                <h1 class="title">Accounting Application</h1>
                 <div class="description">
                     A person consistently looking for ways to improve personal productivity <br>
                     EaglEye will enhance your productivity to a whole new level

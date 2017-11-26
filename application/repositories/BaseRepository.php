@@ -13,16 +13,17 @@ abstract class BaseRepository {
         $this->ci->load->library('form_validation');
     }
 
-    abstract public function getInput(array $request);
-
-    abstract public function setValidationData();
+    abstract public function getInput($request);
 
     abstract public function setValidationRules();
     
     public function validate(array $request) {
-        $this->getInput($request);
-        $this->setValidationData();
-        $this->clean_from_xss();
+
+        $this->getInput(function($name) use ($request){
+            return isset($request[$name]) ? $request[$name] : NULL;
+        });
+
+        $this->cleanFromXss();
         $this->setValidationRules();
 
         if ($this->rules) {
@@ -58,7 +59,7 @@ abstract class BaseRepository {
         return $this->ci->load->view('errors/validation', ['errors' => $this->errors], true);
     }
 
-    public function clean_from_xss() {
+    public function cleanFromXss() {
         $this->data = $this->ci->security->xss_clean($this->data);
     }
 

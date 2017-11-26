@@ -3,22 +3,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BaseController extends MX_Controller {
 
-	private $data_view = [];
+    private $view_data = [];
 
-	public function __construct(array $data_view = [])
-	{
-		parent::__construct();
-		$this->data_view = $data_view;
-	}
+    public function __construct(array $view_data = []) {
+        parent::__construct();
+        $this->view_data = $view_data;
 
-	protected function getDataView(array $data_view = [])
-	{
-		return $this->data_view;
-	}
+        $this->config->load('auth');
+        $this->middleware();
+    }
 
-	protected function serveJSON($data)
-	{
-		echo json_encode($data);
-	}
+    private function middleware() {
+        $config_auth = $this->getConfigAuth();
+        $whitelist = $config_auth['whitelist'];
+
+        $current_uri = $this->getURI();
+        $logged_in = $this->session->userdata('logged_in');
+
+        if (!$logged_in) {
+            if (!in_array($current_uri, $whitelist)) {
+            	$this->session->set_flashdata('error_message', 'Sign in to start your session');
+                redirect('/', 'refresh');
+            }
+        } else {
+            if ($current_uri == $config_auth['page']) {
+                redirect($config_auth['landing_page'], 'refresh');
+            }
+        }
+    }
+
+    protected function getConfigAuth()
+    {
+    	return config_item('auth');
+    }
+
+    protected function getURI() {
+        // $module = $this->router->fetch_module();
+        // $class = $this->router->fetch_class();
+        // $method = $this->router->fetch_method();
+        return $this->uri->uri_string();
+    }
+
+    protected function getViewData() {
+        return $this->view_data;
+    }
+
+    protected function serveJSON($data) {
+        echo json_encode($data);
+    }
 
 }

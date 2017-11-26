@@ -8,8 +8,10 @@ class Migration_login_attempts extends CI_Migration {
         if (!Capsule::schema()->hasTable('login_attempts')) {
             Capsule::schema()->create('login_attempts', function ($table) {
                 $table->uuid('id')->primary();
+                $table->uuid('user_id');
                 $table->string('ip_address', 16);
-                $table->string('token', 16);
+                $table->boolean('status');
+                $table->string('user_agent');
                 $table->timestamps();
             });
         }

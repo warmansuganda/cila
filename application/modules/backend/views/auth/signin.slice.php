@@ -8,12 +8,15 @@
 <!-- /.login-logo -->
 <div class="col col-md-12">
     <h2 style="border-left: 4px solid #126a99;padding-left: 15px;color: #126a99;">Sign in</h2>
-    <p class="login-box-msg">Sign in to start your session</p>
+
+    @if(!empty($error_message))
+      <p class="login-box-msg"><code>{{ $error_message }}</code></p>
+    @endif
 
     {{ form_open('signin') }}
       <div class="form-group has-feedback">
-        <input name="username" type="text" class="form-control" placeholder="Email">
-        <span class="fa fa-envelope form-control-feedback"></span>
+        <input name="username" type="text" class="form-control" placeholder="Username">
+        <span class="fa fa-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input name="password" type="password" class="form-control" placeholder="Password">
@@ -23,7 +26,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Remember Me
+              <input name="remember" type="checkbox"> Remember Me
             </label>
           </div>
         </div>
