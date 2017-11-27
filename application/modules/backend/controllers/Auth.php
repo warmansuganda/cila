@@ -5,7 +5,6 @@ class Auth extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'module' => 'backend/auth',
             'title'   => 'Authentication',
         ]);
 
@@ -30,7 +29,10 @@ class Auth extends BaseController {
             $this->session->set_flashdata('error_message', 'Username and password do not match');
             redirect($config_auth['page'], 'refresh');
         } else {
-            redirect($config_auth['landing_page'], 'refresh');
+            $next_uri = $this->session->userdata('next_uri');
+            $landing_page = !empty($next_uri) ? $next_uri : $config_auth['landing_page'];
+            $this->session->set_userdata('next_uri', '');
+            redirect($landing_page, 'refresh');
         }
     }
 

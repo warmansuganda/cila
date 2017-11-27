@@ -23,7 +23,8 @@ class BaseController extends MX_Controller {
         if (!$logged_in) {
             if (!in_array($current_uri, $whitelist)) {
             	$this->session->set_flashdata('error_message', 'Sign in to start your session');
-                redirect('/', 'refresh');
+                $this->session->set_userdata('next_uri', $current_uri);
+                redirect($config_auth['page'], 'refresh');
             }
         } else {
             if ($current_uri == $config_auth['page']) {
@@ -38,14 +39,34 @@ class BaseController extends MX_Controller {
     }
 
     protected function getURI() {
-        // $module = $this->router->fetch_module();
-        // $class = $this->router->fetch_class();
-        // $method = $this->router->fetch_method();
         return $this->uri->uri_string();
     }
 
+    protected function getMethod() {
+        return $this->router->fetch_method();
+    }
+
+    protected function getModule()
+    {
+        $module = $this->router->fetch_module();
+        $class = $this->router->fetch_class();
+
+        $result = [];
+        if (!empty($module)) {
+            $result[] = $module;
+        }
+        if (!empty($class)) {
+            $result[] = $class;
+        }
+        return implode('/', $result);
+    }
+
     protected function getViewData() {
-        return $this->view_data;
+        $data = $this->view_data;
+        if (!isset($data['module'])) {
+            $data['module'] = $this->getModule();
+        } 
+        return $data;
     }
 
     protected function serveJSON($data) {

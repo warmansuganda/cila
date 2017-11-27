@@ -5,7 +5,6 @@ class Home extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'module' => 'backend/home',
             'title'   => 'Home',
         ]);
     }
