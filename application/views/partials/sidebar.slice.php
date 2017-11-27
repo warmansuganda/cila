@@ -1,6 +1,6 @@
 <!-- Sidebar user panel -->
 <div class="user-panel" style="min-height: 60px;">
-  <div class="pull-left" style="font-size: 28pt;padding-top: 4px;"><i class="fa fa-clock-o" style="color:#fff;"></i></div>
+  <div class="pull-left" style="font-size: 28pt;"><i class="fa fa-clock-o" style="color:#fff;"></i></div>
   <div class="pull-left info">
     <p id="live-date"></p>
     <a href="#"><span id="live-time"></span></a>
