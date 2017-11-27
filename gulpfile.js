@@ -66,7 +66,7 @@ elixir(function(mix) {
         'bower_components/select2/dist/css/select2.min.css',
 
         'bower_components/admin-lte/dist/css/AdminLTE.min.css',
-        'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
+        'bower_components/admin-lte/dist/css/skins/skin-black.min.css',
         
         'resources/css/fonts-googleapis.min.css',
         'resources/css/default.custome.css',
@@ -93,8 +93,11 @@ elixir(function(mix) {
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.extensions.js',
       'bower_components/admin-lte/plugins/timepicker/bootstrap-timepicker.min.js',
 
+      'resources/js/clock.js',
+      
       'bower_components/admin-lte/dist/js/adminlte.min.js',
       'bower_components/admin-lte/dist/js/demo.js',
+
 
     ], 'public/assets/js/main.min.js', './');
 

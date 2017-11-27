@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ elixir('assets/css/main.min.css') }}">
 	@yield('css')
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
 	<div class="wrapper">
 		<!-- Header -->
 		<header class="main-header">
@@ -37,12 +37,16 @@
 	</div> 
 
 	<script type="text/javascript" src="{{ elixir('assets/js/main.min.js') }}"></script>
+	<!-- <script type="text/javascript" src="{{ base_url('resources/js/clock.js') }}"></script> -->
 	<script type="text/javascript">
 		NProgress.start();
 	</script>
 	<script type="text/javascript">
 	    $(function(){
 	    	NProgress.done();
+	    	// Side clock
+	    	$('#live-date').clock({"langSet": "id", "timer": "false"});
+            $('#live-time').clock({"format": "24", "calendar": "false"});
 	    });
 	</script>
 	@yield('js')

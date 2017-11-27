@@ -5,7 +5,7 @@ class Auth extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'modules' => 'backend/auth',
+            'module' => 'backend/auth',
             'title'   => 'Authentication',
         ]);
 
@@ -16,7 +16,7 @@ class Auth extends BaseController {
         $data = $this->getViewData();
         $data['title'] = 'Welcome';
         $data['error_message'] = $this->session->flashdata('error_message');
-        $this->slice->view("backend/auth/signin", $data);
+        $this->slice->view($data['module'] . "/signin", $data);
     }
 
     public function signin() {
