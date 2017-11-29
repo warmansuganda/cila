@@ -1,0 +1,47 @@
+#login #header {
+	box-shadow: 0 4px 10px 0 #969696;
+}
+
+#login #header .logo {
+	max-height: 120px;
+	margin-left: 10px;
+}
+
+#login #header .title {
+	font-size: 18px;
+	margin-top: 8px;
+}
+
+#login #header .description {
+	font-size: 11px;
+	margin-bottom: 8px;
+}
+
+#login .apps-information {
+	position: absolute;
+	top: 20%;
+	padding-left: 30px;
+	padding-right: 30px;
+	display: block;
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0,0,0,.6);
+	text-align: center;	
+	width: 100%;
+}
+
+#login .apps-information .btn {
+	background: #FFF;
+    border-radius: 51px;
+    font-size: 13px;
+    color: #404042;
+    font-weight: 500;
+    width: 170px;
+    margin-top: 30px;
+}
+
+@media (max-width: 576px) {
+	.form-login {
+		top: -140px;
+		background-color: #fff;
+	}
+}

@@ -1,0 +1,23 @@
+{
+  "name": "bijb-finance",
+  "description": "What is CodeIgniter ###################",
+  "main": "index.js",
+  "authors": [
+    "warman suganda <warman.suganda@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": "^2.4.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "iCheck": "icheck#^1.0.2",
+    "nprogress": "^0.2.0"
+  }
+}

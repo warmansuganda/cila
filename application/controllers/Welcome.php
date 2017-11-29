@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends MX_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +20,20 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->slice->view('welcome_message');
+		// $data = [
+  //           // 'id'          => '9bfac102-d136-11e7-8941-cec278b6b50a',
+  //           'name'        => 'admin',
+  //           'description' => 'Administrato',
+  //       ];
+
+  //       // $model = new \GroupsModel();
+  //       // // $model->id = "asdf";
+  //       // $model->name = "asdf";
+  //       // $model->description = "asdf";
+  //       // $model->save();
+  //       \GroupsModel::boot();
+  //       \GroupsModel::create($data);
+		// echo \GroupsModel::count();
 	}
 }
