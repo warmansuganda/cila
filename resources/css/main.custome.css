@@ -1,0 +1,22 @@
+#nprogress .bar {
+  background: #fff;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #fff, 0 0 5px #fff;
+}
+
+.user-panel {
+	padding: 8px;
+}
+
+.user-panel>.info {
+    padding: 10px 5px 5px 2px;
+    line-height: 1;
+    position: absolute;
+    left: 55px;
+}
+.user-panel>.info>p {
+	margin-bottom: 4px;
+}
