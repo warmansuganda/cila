@@ -22,10 +22,16 @@ class Tools extends CI_Controller {
 
     public function help() {
         $result = "The following are the available command line interface commands\n\n";
-        $result .= "php index.php tools migration \"file_name\"         Create new migration file\n";
-        $result .= "php index.php tools migrate [\"version_number\"]    Run all migrations. The version number is optional.\n";
-        $result .= "php index.php tools seeder \"file_name\"            Creates a new seed file.\n";
-        $result .= "php index.php tools seed \"file_name\"              Run the specified seed file.\n";
+        $result .= "php index.php tools migration \"file_name\"                  Create new migration file\n";
+        $result .= "php index.php tools migrate [\"version_number\"]             Run all migrations. The version number is optional.\n";
+        $result .= "php index.php tools seeder \"file_name\"                     Creates a new seed file.\n";
+        $result .= "php index.php tools seed \"file_name\"                       Run the specified seed file.\n";
+        $result .= "php index.php tools module \"name\" \"path\" \"fillable\"        Creates a new module file.\n";
+        $result .= "php index.php tools model \"name\" \"path\" \"fillable\"         Creates a new model file.\n";
+        $result .= "php index.php tools controller \"name\" \"path\"               Creates a new controller file.\n";
+        $result .= "php index.php tools repository \"name\" \"path\" \"fillable\"    Creates a new repository file.\n";
+        $result .= "php index.php tools processor \"name\" \"path\"                Creates a new processor file.\n";
+        $result .= "php index.php tools service \"name\" \"path\" \"fillable\"       Creates a new service file.\n";
 
         echo $result . PHP_EOL;
     }
