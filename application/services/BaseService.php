@@ -9,6 +9,8 @@ class BaseService
 	function __construct()
 	{
 		$this->ci = &get_instance();
+		$this->ci->load->library('datatables');
 		$this->carbon = new Carbon;
+		$this->datatables = $this->ci->datatables;
 	}
 }

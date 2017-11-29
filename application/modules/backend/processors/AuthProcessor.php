@@ -10,7 +10,6 @@ class AuthProcessor extends BaseProcessor
 		$this->service = new AuthService();
 	}
 
-
 	public function setProcessor(string $operation_type, array $data)
 	{
 		try {

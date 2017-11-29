@@ -1,7 +1,8 @@
 <?php
 
 class AuthService extends BaseService {
-
+    private $model;
+    
     function __construct() {
         parent::__construct();
         $this->model = new UsersModel();
