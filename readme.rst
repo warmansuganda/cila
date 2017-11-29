@@ -35,12 +35,46 @@ It should work on 5.3.7 as well, but we strongly advise you NOT to run
 such old versions of PHP, because of potential security and performance
 issues, as well as missing features.
 
+**Other Requirements** 
+
+Composer : Package manager for PHP, <https://getcomposer.org/>
+
+npm : package manger for Javascript, <https://www.npmjs.com/>
+
+Bower : package manager for Javascript, <https://bower.io/>
+
+Gulp : asset management with Javascript, <https://gulpjs.com/>
+
+ 
 ************
 Installation
 ************
 
 Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
 of the CodeIgniter User Guide.
+
+
+**Setup** 
+
+Open your terminal / CMD and then :
+
+- Run : composer install
+
+- Run : composer dump-autoload
+
+- Run : npm run ensure
+
+- Run : npm run build
+
+
+************
+Tools
+************
+
+Open your terminal / CMD and then :
+
+- Run : php index.php tools help
+
 
 *******
 License
