@@ -60,9 +60,20 @@ Open your terminal / CMD and then :
 
 - Run : composer install
 
+- Run : composer dump-autoload
+
 - Run : npm run ensure
 
 - Run : npm run build
+
+
+************
+Tools
+************
+
+Open your terminal / CMD and then :
+
+- Run : php index.php tools help
 
 
 *******
