@@ -2,6 +2,8 @@
 
 class Tools extends CI_Controller {
 
+    private $controller_suffix;
+
     public function __construct() {
         parent::__construct();
 
@@ -14,6 +16,8 @@ class Tools extends CI_Controller {
 
         // initiate faker
         $this->faker = Faker\Factory::create();
+        $this->controller_suffix = $this->config->item('controller_suffix');
+
     }
 
     public function message($to = 'World') {
@@ -75,9 +79,7 @@ class Tools extends CI_Controller {
 
         $table_name = strtolower($name);
 
-        $path = APPPATH . "database/migrations/$timestamp" . "_" . "$name.php";
-
-        $my_migration = fopen($path, "w") or die("Unable to create migration file!");
+        $path = APPPATH . "database/migrations";
 
         $migration_template = "<?php
 
@@ -104,17 +106,13 @@ class Migration_$name extends CI_Migration {
 
 }";
 
-        fwrite($my_migration, $migration_template);
-
-        fclose($my_migration);
+        $this->create_file($migration_template, $path,  $timestamp . "_" . "$name.php");
 
         echo "$path migration has successfully been created." . PHP_EOL;
     }
 
     protected function make_seed_file($name, $model) {
-        $path = APPPATH . "database/seeds/$name.php";
-
-        $my_seed = fopen($path, "w") or die("Unable to create seed file!");
+        $path = APPPATH . "database/seeds";
 
         $seed_template = "<?php
 
@@ -150,9 +148,7 @@ class $name extends Seeder {
 }
 ";
 
-        fwrite($my_seed, $seed_template);
-
-        fclose($my_seed);
+        $this->create_file($seed_template, $path,  "$name.php");
 
         echo "$path seeder has successfully been created." . PHP_EOL;
     }
@@ -165,6 +161,7 @@ class $name extends Seeder {
         $this->make_repository_file($name, $path, $fillable);
         $this->make_processor_file($name, $path);
         $this->make_service_file($name, $path, $fillable);
+        $this->make_view_file($name, $path);
     }
 
     public function unmodule($table, $path = '')
@@ -173,11 +170,12 @@ class $name extends Seeder {
         $name = str_replace('_', '', $camelcase);
         $real_path = str_replace('-', '/', $path);
 
-        $controllers = APPPATH . $real_path . "/controllers/" .$name . ".php";
+        $controllers = APPPATH . $real_path . "/controllers/" . ucwords(strtolower($camelcase)) . $this->controller_suffix . ".php";
         $models = APPPATH . $real_path . "/models/" .$name . "Model.php";
         $repositories = APPPATH . $real_path . "/repositories/" .$name . "Repository.php";
         $processors = APPPATH . $real_path . "/processors/" .$name . "Processor.php";
         $service = APPPATH . $real_path . "/services/" .$name . "Service.php";
+        $view = APPPATH . $real_path . "/views/" . $table;
 
         if (file_exists($controllers)) {
             unlink($controllers);
@@ -203,6 +201,10 @@ class $name extends Seeder {
             unlink($service);
             echo $service . " has successfully been deleted." . PHP_EOL;
         }
+
+        if($this->delete_dir($view)) {
+            echo $view . " has successfully been deleted." . PHP_EOL;
+        }
     }
 
     public function model($table, $path = '-models', $fillable = '')
@@ -222,9 +224,7 @@ class $name extends Seeder {
             $path = $path != $dir ? $path : str_replace('-', '', $dir);
         }
 
-        $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
-
-        $my_model = fopen($path, "w") or die("Unable to create seed file!");
+        $path = APPPATH . str_replace('-', '/', $path);
 
         if (!empty($fillable)) {
             $split_fillable = explode('-', $fillable);
@@ -256,9 +256,7 @@ class $name extends Eloquent {
 }
 ";
 
-        fwrite($my_model, $model_template);
-
-        fclose($my_model);
+        $this->create_file($model_template, $path,  "$name.php");
 
         echo "$path model has successfully been created." . PHP_EOL;
     }
@@ -271,7 +269,7 @@ class $name extends Eloquent {
     protected function make_controller_file($table, $path) {
         $camelcase = ucwords($table, "_");
         $title = str_replace('_', ' ', $camelcase);
-        $name = str_replace('_', '', $camelcase);
+        $name = ucwords(strtolower($camelcase)) . $this->controller_suffix;
         $repo = str_replace('_', '', $camelcase) . 'Repository';
 
         $dir = '-controllers';
@@ -281,9 +279,7 @@ class $name extends Eloquent {
             $path = $path != $dir ? $path : str_replace('-', '', $dir);
         }
 
-        $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
-
-        $my_controller = fopen($path, "w") or die("Unable to create seed file!");
+        $path = APPPATH . str_replace('-', '/', $path);
 
         $controller_template = "<?php
 
@@ -294,28 +290,52 @@ class $name extends BaseController {
     function __construct() {
         parent::__construct([
             'title'   => '$title',
+            'description'   => '$title Management',
         ]);
 
         \$this->repo = new $repo();
     }
 
-    public function index() {
-        \$data = \$this->getViewData();
-        \$this->slice->view(\$data['module'] . \"/index\", \$data);
+    public function getIndex() {
+        \$this->serveView();
     }
 
-    public function create() {
+    public function getRead() {
+      \$input = \$this->input->get();
+      \$return = \$this->repo->startProcess('read', \$input);
+      \$this->serveJSON(\$return);
+    }
+    
+    public function getAdd() {
+        \$this->serveView();
+    }
+
+    public function postCreate() {
       \$input = \$this->input->post();
       \$return = \$this->repo->startProcess('create', \$input);
+      \$this->serveJSON(\$return);
+    }
+
+    public function getEdit() {
+        \$this->serveView();
+    }
+
+    public function postUpdate() {
+      \$input = \$this->input->post();
+      \$return = \$this->repo->startProcess('update', \$input);
+      \$this->serveJSON(\$return);
+    }    
+
+    public function postDelete() {
+      \$input = \$this->input->get();
+      \$return = \$this->repo->startProcess('delete', \$input);
       \$this->serveJSON(\$return);
     }
 
 }
 ";
 
-        fwrite($my_controller, $controller_template);
-
-        fclose($my_controller);
+        $this->create_file($controller_template, $path,  "$name.php");
 
         echo "$path controller has successfully been created." . PHP_EOL;
     }
@@ -339,9 +359,7 @@ class $name extends BaseController {
             $path = $path != $dir ? $path : str_replace('-', '', $dir);
         }
 
-        $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
-
-        $my_repository = fopen($path, "w") or die("Unable to create seed file!");
+        $path = APPPATH . str_replace('-', '/', $path);
 
         if (!empty($fillable)) {
             $split_fillable = explode('-', $fillable);
@@ -392,9 +410,7 @@ class $name extends BaseRepository {
 }
 ";
 
-        fwrite($my_repository, $repository_template);
-
-        fclose($my_repository);
+        $this->create_file($repository_template, $path,  "$name.php");
 
         echo "$path model has successfully been created." . PHP_EOL;
     }
@@ -418,9 +434,7 @@ class $name extends BaseRepository {
             $path = $path != $dir ? $path : str_replace('-', '', $dir);
         }
 
-        $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
-
-        $my_processor = fopen($path, "w") or die("Unable to create seed file!");
+        $path = APPPATH . str_replace('-', '/', $path);
 
         $processor_template = "<?php
 
@@ -453,9 +467,7 @@ class $name extends BaseProcessor {
 }
 ";
 
-        fwrite($my_processor, $processor_template);
-
-        fclose($my_processor);
+        $this->create_file($processor_template, $path,  "$name.php");
 
         echo "$path processor has successfully been created." . PHP_EOL;
     }
@@ -478,7 +490,7 @@ class $name extends BaseProcessor {
             $path = $path != $dir ? $path : str_replace('-', '', $dir);
         }
 
-        $path = APPPATH . str_replace('-', '/', $path) . "/$name.php";
+        $path = APPPATH . str_replace('-', '/', $path);
 
 
         if (!empty($fillable)) {
@@ -491,8 +503,6 @@ class $name extends BaseProcessor {
         } else {
             $join_fillable = '';
         }
-
-        $my_service = fopen($path, "w") or die("Unable to create seed file!");
 
         $service_template = "<?php
 
@@ -526,11 +536,83 @@ class $name extends BaseService {
 }
 ";
 
-        fwrite($my_service, $service_template);
+        $this->create_file($service_template, $path,  "$name.php");
 
-        fclose($my_service);
 
         echo "$path service has successfully been created." . PHP_EOL;
+    }
+
+    public function view($table, $path = '-views', $fillable = '')
+    {
+        $this->make_view_file($table, $path, $fillable);
+    }
+
+    protected function make_view_file($table, $path, $fillable = '') {
+        $name = $table;
+
+        $dir = '-views';
+        if (substr($path, -1 * strlen($dir)) != $dir) {
+            $path .= !empty($path) ? $dir : str_replace('-', '', $dir);
+        } else {
+            $path = $path != $dir ? $path : str_replace('-', '', $dir);
+        }
+
+        $path = APPPATH . str_replace('-', '/', $path) . "/$name";
+
+        if( is_dir($path) === false )
+        {
+            mkdir($path);
+        }
+
+        if (!empty($fillable)) {
+            $split_fillable = explode('-', $fillable);
+            $list_fillable = [];
+            foreach ($split_fillable as $value) {
+                $list_fillable[] = PHP_EOL . "            '$value' => \$data['$value']";
+            }
+            $join_fillable = implode(',', $list_fillable);
+        } else {
+            $join_fillable = '';
+        }
+
+        $my_view = fopen($path . '/index.slice.php', "w") or die("Unable to create seed file!");
+
+        $view_template = "
+ahay
+";
+
+        $this->create_file($view_template, $path, 'index.slice.php');
+
+        echo "$path view has successfully been created." . PHP_EOL;
+    }
+
+    protected function create_file($content = '', $path ='', $filename = 'unknown')
+    {
+        $my_view = fopen($path . '/' . $filename, "w") or die("Unable to create seed file!");
+        fwrite($my_view, $content);
+        fclose($my_view);
+    }
+
+    protected function delete_dir($path)
+    {
+        if (is_dir($path) === true)
+        {
+            $files = array_diff(scandir($path), array('.', '..'));
+
+            foreach ($files as $file)
+            {
+                $this->delete_dir(realpath($path) . '/' . $file);
+            }
+
+            return rmdir($path);
+        }
+
+        else if (is_file($path) === true)
+        {
+            return unlink($path);
+        }
+
+        return false;
     }
 
 }

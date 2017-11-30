@@ -22,7 +22,7 @@ class BaseController extends MX_Controller {
 
         if (!$logged_in) {
             if (!in_array($current_uri, $whitelist)) {
-            	$this->session->set_flashdata('error_message', 'Sign in to start your session');
+                $this->session->set_flashdata('error_message', 'Sign in to start your session');
                 $this->session->set_userdata('next_uri', $current_uri);
                 redirect($config_auth['page'], 'refresh');
             }
@@ -33,9 +33,8 @@ class BaseController extends MX_Controller {
         }
     }
 
-    protected function getConfigAuth()
-    {
-    	return config_item('auth');
+    protected function getConfigAuth() {
+        return config_item('auth');
     }
 
     protected function getURI() {
@@ -46,8 +45,7 @@ class BaseController extends MX_Controller {
         return $this->router->fetch_method();
     }
 
-    protected function getModule()
-    {
+    protected function getModule() {
         $module = $this->router->fetch_module();
         $class = $this->router->fetch_class();
 
@@ -56,7 +54,12 @@ class BaseController extends MX_Controller {
             $result[] = $module;
         }
         if (!empty($class)) {
-            $result[] = $class;
+            $controller_suffix = $this->config->item('controller_suffix');
+            
+            $controller = rtrim($class, $controller_suffix);
+            $matches = preg_split('/(?=[A-Z])/', $controller);
+            $result[] = strtolower(implode('_', $matches));
+            // dump($result);
         }
         return implode('/', $result);
     }
@@ -65,12 +68,39 @@ class BaseController extends MX_Controller {
         $data = $this->view_data;
         if (!isset($data['module'])) {
             $data['module'] = $this->getModule();
-        } 
+        }
+        if (!isset($data['title'])) {
+            $data['title'] = "Untitled";
+        }
+        if (!isset($data['description'])) {
+            $data['description'] = "";
+        }
         return $data;
     }
 
     protected function serveJSON($data) {
         echo json_encode($data);
+    }
+
+    protected function serveView($data = [], $path = '') {
+        if (empty($path)) {
+            $path = isset($data['module']) ? $data['module'] : $this->getModule();
+            $path .= '/' . $this->getMethod();
+        }
+        $this->slice->view($path, count($data) > 0 ? $data : $this->getViewData());
+    }
+
+    public function _remap($method, $params = array()) {
+        $request_method = $this->input->method(FALSE);
+        $camelcase = ucwords($method, "-");
+        $cleanDash = str_replace('-', '', $camelcase);
+        // dump($cleanDash);
+        $method = $request_method . '' . $cleanDash;
+
+        if (method_exists($this, $method)) {
+            return call_user_func_array(array($this, $method), $params);
+        }
+        show_404();
     }
 
 }
