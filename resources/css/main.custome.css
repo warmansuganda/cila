@@ -25,3 +25,21 @@
 .box-auto-filter {
     padding: 8px 10px 0;
 }
+
+label.control-label {
+	padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+/*table.dataTable thead .sorting {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATAgMAAAAPPt5fAAAACVBMV…djwAYEwGQKiGDsBJFsTA5AUoJhAqZaiDhEDVg9RC/MHEwAANsMA91AQfd/AAAAAElFTkSuQmCC) no-repeat 100%;
+}
+
+table.dataTable thead .sorting_asc {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATAQMAAABInqSPAAAABlBMV…bYZgAAAB1JREFUCNdjwAkcgPgBAwPjBwYG5h8MDOx/GAgBAKRJBBCQbHkwAAAAAElFTkSuQmCC) no-repeat 100%;
+}
+
+table.dataTable thead .sorting_desc {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATAQMAAABInqSPAAAABlBMV…bYZgAAABxJREFUCNdjIATY/zAwMP9gYGD8AOQ8AGIHnEoBkNkEEEbbutQAAAAASUVORK5CYII=) no-repeat 100%;
+}*/
