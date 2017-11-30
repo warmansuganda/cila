@@ -20,15 +20,7 @@
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            <h3 class="box-title">Direct Chat</h3>
-            <div class="box-tools pull-right">
-              <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="3 New Messages">3</span>
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
-                <i class="fa fa-comments"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
+            @include('components.index-tools', [ 'button' => ['<i class="fa fa-plus"></i>', 'Add New', false] ])
           </div>
           <div class="box-body">
             

@@ -17,6 +17,11 @@
     position: absolute;
     left: 55px;
 }
+
 .user-panel>.info>p {
 	margin-bottom: 4px;
+}
+
+.box-auto-filter {
+    padding: 8px 10px 0;
 }

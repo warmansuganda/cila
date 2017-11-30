@@ -577,13 +577,8 @@ class $name extends BaseService {
             $join_fillable = '';
         }
 
-        $my_view = fopen($path . '/index.slice.php', "w") or die("Unable to create seed file!");
-
-        $view_template = "
-ahay
-";
-
-        $this->create_file($view_template, $path, 'index.slice.php');
+        $view_index = file_get_contents(APPPATH . 'views/templates/index.slice.php');
+        $this->create_file($view_index, $path, 'index.slice.php');
 
         echo "$path view has successfully been created." . PHP_EOL;
     }
