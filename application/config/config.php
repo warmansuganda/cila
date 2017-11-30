@@ -191,7 +191,6 @@ $config['enable_query_strings'] = FALSE;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
 $config['directory_trigger'] = 'd';
-// $config['controller_suffix'] = 'Controller';
 
 /*
 |--------------------------------------------------------------------------

@@ -171,6 +171,7 @@ class $name extends Seeder {
         $real_path = str_replace('-', '/', $path);
 
         $controllers = APPPATH . $real_path . "/controllers/" . ucwords(strtolower($camelcase)) . $this->controller_suffix . ".php";
+        // $controllers = APPPATH . $real_path . "/controllers/" . $name . $this->controller_suffix . ".php";
         $models = APPPATH . $real_path . "/models/" .$name . "Model.php";
         $repositories = APPPATH . $real_path . "/repositories/" .$name . "Repository.php";
         $processors = APPPATH . $real_path . "/processors/" .$name . "Processor.php";
@@ -269,6 +270,7 @@ class $name extends Eloquent {
     protected function make_controller_file($table, $path) {
         $camelcase = ucwords($table, "_");
         $title = str_replace('_', ' ', $camelcase);
+        // $name = str_replace('_', '', $camelcase) . $this->controller_suffix;
         $name = ucwords(strtolower($camelcase)) . $this->controller_suffix;
         $repo = str_replace('_', '', $camelcase) . 'Repository';
 

@@ -58,8 +58,7 @@ class BaseController extends MX_Controller {
             
             $controller = rtrim($class, $controller_suffix);
             $matches = preg_split('/(?=[A-Z])/', $controller);
-            $result[] = strtolower(implode('_', $matches));
-            // dump($result);
+            $result[] = ltrim(strtolower(implode('_', $matches)), '_');
         }
         return implode('/', $result);
     }

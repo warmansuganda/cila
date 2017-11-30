@@ -6,7 +6,7 @@
     <title>@yield('title')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	<link rel="stylesheet" type="text/css" href="{{ elixir('assets/css/main.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ base_url() . elixir('assets/css/main.min.css') }}">
 	@yield('css')
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -36,7 +36,7 @@
 		</footer>
 	</div> 
 
-	<script type="text/javascript" src="{{ elixir('assets/js/main.min.js') }}"></script>
+	<script type="text/javascript" src="{{ base_url() . elixir('assets/js/main.min.js') }}"></script>
 	<!-- <script type="text/javascript" src="{{ base_url('resources/js/clock.js') }}"></script> -->
 	<script type="text/javascript">
 		NProgress.start();
