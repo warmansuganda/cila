@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class Datatables
 {
@@ -42,14 +43,21 @@ class Datatables
 
 	function __construct()
 	{
-		# code...
+		$this->input = [
+            'draw' => 0
+        ];
 	}
 
-	public function of(array $data, $query)
+	public function of($builder, array $input = [])
 	{
-		$this->data = $data;
-		$this->query = $query;
-		return $this;
+        // if (count($input) > 0) {
+        //   $this->input = $input;
+        // }
+
+        $this->query = $builder;
+        $this->getTotalRecords($builder); //Total records
+
+        return $this;
 	}
 
 	/**
@@ -59,10 +67,10 @@ class Datatables
      * @return Datatables
      * @internal param $Closure
      */
-    public function filter(Closure $callback)
+    public function filter($callback)
     {
         $query = $this->query;
-        call_user_func($callback, $query);
+        $this->query = $callback($query);
 
         return $this;
     }
@@ -73,9 +81,9 @@ class Datatables
 		return $this;
 	}
 
-	public function make(bool $value)
+	public function make()
 	{
-		# code...
+		$this->getResult();
 		return $this->output();
 	}
 
@@ -94,5 +102,41 @@ class Datatables
         ];
 
         return $output;
+    }
+
+    /**
+     * Get total records
+     *
+     * @return int
+     */
+    private function getTotalRecords($query)
+    {
+        return $this->totalRecords = $this->count($query);
+    }
+
+    /**
+     * Counts current query
+     *
+     * @return int
+     */
+    private function count($query)
+    {
+        return $query->count();
+    }
+
+    private function string_contains($haystack, $needles)
+    {
+        foreach ((array) $needles as $needle)
+        {
+            if ($needle != '' && strpos($haystack, $needle) !== false) return true;
+        }
+
+        return false;
+    }
+
+    public function getResult()
+    {
+        $query = $this->query;
+        $this->filteredRecords = $query->count();
     }
 }

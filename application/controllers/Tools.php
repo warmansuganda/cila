@@ -240,13 +240,8 @@ class $name extends Seeder {
 
         $model_template = "<?php
 
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+class $name extends BaseModel {
 
-class $name extends Eloquent {
-
-    use UuidTrait;
-
-    public \$incrementing = false;
     protected \$table = '$table'; // Table name
     /* 
      * Defining Fillable Attributes On A Model

@@ -17,6 +17,15 @@ class GroupsProcessor extends BaseProcessor {
                 case 'create':
                     $this->output = $this->service->create($data);
                     break;
+                case 'read':
+                    $this->output = $this->service->read($data);
+                    break;
+                case 'update':
+                    $this->output = $this->service->update($data);
+                    break;
+                case 'delete':
+                    $this->output = $this->service->delete($data);
+                    break;
             }
 
             return true;

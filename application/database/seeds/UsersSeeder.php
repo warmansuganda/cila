@@ -7,10 +7,9 @@ class UsersSeeder extends Seeder {
 
         //seed records manually
         $data = [
-            'id'                      => '9bfac760-d136-11e7-8941-cec278b6b50a',
             'ip_address'              => '127.0.0.1',
             'username'                => 'administrator',
-            'password'                => '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36',
+            'password'                => password_hash("administrator", PASSWORD_DEFAULT),
             'salt'                    => '',
             'email'                   => 'admin@admin.com',
             'activation_code'         => '',

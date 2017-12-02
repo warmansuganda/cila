@@ -6,8 +6,8 @@ class Groups extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'title'   => 'Groups',
-            'description'   => 'Groups Management',
+            'title'       => 'Groups',
+            'description' => 'Groups Management',
         ]);
 
         $this->repo = new GroupsRepository();
@@ -18,7 +18,7 @@ class Groups extends BaseController {
     }
 
     public function getRead() {
-      $input = $this->input->get();
+      $input  = $this->input->get();
       $return = $this->repo->startProcess('read', $input);
       $this->serveJSON($return);
     }
@@ -28,7 +28,7 @@ class Groups extends BaseController {
     }
 
     public function postCreate() {
-      $input = $this->input->post();
+      $input  = $this->input->post();
       $return = $this->repo->startProcess('create', $input);
       $this->serveJSON($return);
     }
@@ -38,13 +38,13 @@ class Groups extends BaseController {
     }
 
     public function postUpdate() {
-      $input = $this->input->post();
+      $input  = $this->input->post();
       $return = $this->repo->startProcess('update', $input);
       $this->serveJSON($return);
     }    
 
     public function postDelete() {
-      $input = $this->input->get();
+      $input  = $this->input->get();
       $return = $this->repo->startProcess('delete', $input);
       $this->serveJSON($return);
     }

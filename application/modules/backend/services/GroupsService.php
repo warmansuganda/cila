@@ -2,32 +2,41 @@
 
 class GroupsService extends BaseService {
 
-    private $model;
-    
     function __construct() {
         parent::__construct();
-        $this->model = new GroupsModel();
     }
 
     public function create(array $data) {
-        $query = $this->model->create([ 
-            'name' => $data['name'],
+        return GroupsModel::createOne([
+            'name'        => $data['name'],
             'description' => $data['description'],
-            'status' => $data['status']
+            'status'      => $data['status'],
         ]);
+    }
 
-        if ($query) {   
-            $result = [
-                '_id' => $query->id,
-                'messages' => [200, 'Created successfully.', '']
-            ];
-        } else {
-            $result = [
-                'messages' => [500, 'Created failed.', '']
-            ];
-        }
+    public function read(array $data) {
+        $query = GroupsModel::data();
+        return $this->datatables->of($query)
+            ->filter(function($query){
+                $query->where('name', 'admin');
+                return $query;
+            })
+            ->addColumn('percentage', function($query){
+                return "";
+            })
+            ->make();
+    }
 
-        return $result;
+    public function update(array $data) {
+        return GroupsModel::updateOne($data['id'], [
+            'name'        => $data['name'],
+            'description' => $data['description'],
+            'status'      => $data['status'],
+        ]);
+    }
+
+    public function delete(array $data) {
+        return GroupsModel::deleteOne($data['id']);
     }
 
 }

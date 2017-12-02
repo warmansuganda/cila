@@ -9,11 +9,11 @@ class GroupsRepository extends BaseRepository {
 
     public function getInput($request) {
         $this->data = [ 
-            'name'   => $request('name'),
-            'description'   => $request('description'),
-            'status'   => $request('status')
+            'id'          => $request('id'),
+            'name'        => $request('name'),
+            'description' => $request('description'),
+            'status'      => $request('status')
         ];
-
     }
 
     public function setValidationRules() {

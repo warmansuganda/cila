@@ -27,6 +27,7 @@ abstract class BaseRepository {
         $this->setValidationRules();
 
         if ($this->rules) {
+            $this->ci->form_validation->set_data($this->getData());
             $this->ci->form_validation->set_rules($this->rules);
 
             if ($this->ci->form_validation->run() == false) {

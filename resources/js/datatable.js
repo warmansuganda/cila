@@ -52,35 +52,33 @@
 
                 columns: options.columns,
 
-                fnInitComplete: function () {
-                    $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
-                    $('[rel="tooltip"]').tooltip();
+                // fnInitComplete: function () {
+                //     $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
+                //     $('[rel="tooltip"]').tooltip();
 
-                    options.onComplete.call(object);
-                },
+                //     options.onComplete.call(object);
+                // },
 
-                drawCallback: function( settings ) {
-                    $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
-                    $('[rel="tooltip"]').tooltip();
+                // drawCallback: function( settings ) {
+                //     $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
+                //     $('[rel="tooltip"]').tooltip();
 
-                    var info  = dataTable.page.info();
-                    var rowCount = info.recordsTotal;
+                //     var info  = dataTable.page.info();
+                //     var rowCount = info.recordsTotal;
 
-                    if(options.columnIndex !== null && options.columnIndex !== -1) {
-                        if ( settings.bSorted || settings.bFiltered )
-                        {
-                            var info  = dataTable.page.info();
-                            var no    = info.start + 1;
-                            dataTable.column(options.columnIndex, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                                cell.innerHTML = no++;
-                            });
-                        }
-                    }
-                    options.onDraw.call(object);
-                    $(':input[type="checkbox"]', object).uniform();
-                },
-
-
+                //     if(options.columnIndex !== null && options.columnIndex !== -1) {
+                //         if ( settings.bSorted || settings.bFiltered )
+                //         {
+                //             var info  = dataTable.page.info();
+                //             var no    = info.start + 1;
+                //             dataTable.column(options.columnIndex, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                //                 cell.innerHTML = no++;
+                //             });
+                //         }
+                //     }
+                //     options.onDraw.call(object);
+                //     $(':input[type="checkbox"]', object).uniform();
+                // },
 
             });
 

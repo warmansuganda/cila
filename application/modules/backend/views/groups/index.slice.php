@@ -53,7 +53,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Status', 'Action'] ])
+            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Status', 'Action'], 'data_source' => $module . '/read' ])
           </div>
           <div class="box-footer">
             
