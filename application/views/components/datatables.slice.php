@@ -5,6 +5,7 @@
        data-table-filter="{{ isset($filter_id) ? $filter_id :  '#form-filter' }}">
     <thead>
 	    <tr>
+	    	<th></th>
 	    	@if (isset($header) && count($header) > 0)
 	    		@foreach($header as $key => $value)
 		    		<th>{{ $value }}</th>

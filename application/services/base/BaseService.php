@@ -5,6 +5,7 @@ class BaseService
 {
 	protected $ci;
 	protected $carbon;
+	protected $encryption;
 	
 	function __construct()
 	{
@@ -12,5 +13,6 @@ class BaseService
 		$this->ci->load->library('datatables');
 		$this->carbon = new Carbon;
 		$this->datatables = $this->ci->datatables;
+		$this->encryption = $this->ci->encrypt;
 	}
 }

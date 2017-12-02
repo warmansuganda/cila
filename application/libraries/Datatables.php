@@ -22,7 +22,21 @@ class Datatables
      *
      * @var array
      */
-    protected $result_array = [];
+    protected $result_array = []; 
+
+    /**
+     * Result Array
+     *
+     * @var array
+     */
+    protected $extra_columns = [];
+
+    /**
+     * Result Object
+     *
+     * @var array
+     */
+    protected $result_object = [];
 
     /**
      * Input
@@ -50,9 +64,9 @@ class Datatables
 
 	public function of($builder, array $input = [])
 	{
-        // if (count($input) > 0) {
-        //   $this->input = $input;
-        // }
+        if (count($input) > 0) {
+          $this->input = $input;
+        }
 
         $this->query = $builder;
         $this->getTotalRecords($builder); //Total records
@@ -75,15 +89,16 @@ class Datatables
         return $this;
     }
 
-	public function addColumn($name, $clallback)
+	public function addColumn($name, $callback)
 	{
-		# code...
+		$this->extra_columns[$name] = $callback; 
 		return $this;
 	}
 
 	public function make()
 	{
-		$this->getResult();
+        $this->getResult();
+		$this->initColumns();
 		return $this->output();
 	}
 
@@ -134,9 +149,31 @@ class Datatables
         return false;
     }
 
-    public function getResult()
+    private function getResult()
     {
         $query = $this->query;
         $this->filteredRecords = $query->count();
+        $this->result_object = $this->query->get();
+        $this->result_array = array_map(function ($object) {
+            return (array) $object;
+        }, $this->result_object->toArray());
+    }
+
+    private function initColumns()
+    {
+        if (count($this->extra_columns) > 0) {
+            $result = [];
+            foreach ($this->result_array as $key => $value) {
+                $custome_result = $value;
+                foreach ($this->extra_columns as $name => $callback) {
+                    $query = $this->result_object[$key];
+                    $custome_result[$name] = $callback($query);
+                }
+
+                $result[] = $custome_result;
+            }
+
+            $this->result_array = $result;
+        }
     }
 }

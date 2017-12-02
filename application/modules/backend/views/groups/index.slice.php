@@ -70,10 +70,11 @@
     var autoFilter = true;
     var oTable = $('table#main-table').myDataTable({
         columns: [
-            {data: 'score', name: 'score'},
-            {data: 'desc', name: 'desc'},
-            {data: 'status', name: 'status'},
-            {data: 'action', name:'id', className:'hide-orderable-node'}
+          {data: 'checkbox', orderable: false, width: "1%"},
+          {data: 'name', name: 'name'},
+          {data: 'description', name: 'description'},
+          {data: 'status', name: 'status'},
+          {data: 'action', name:'id', className:'hide-orderable-node'}
         ]
     });
   })

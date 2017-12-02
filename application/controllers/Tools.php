@@ -504,30 +504,38 @@ class $name extends BaseProcessor {
         $service_template = "<?php
 
 class $name extends BaseService {
-
-    private \$model;
     
     function __construct() {
         parent::__construct();
-        \$this->model = new $model();
     }
 
     public function create(array \$data) {
-        \$query = \$this->model->create([ $join_fillable
+        return $model::createOne([ $join_fillable
         ]);
+    }
 
-        if (\$query) {   
-            \$result = [
-                '_id' => \$query->id,
-                'messages' => [200, 'Created successfully.', '']
-            ];
-        } else {
-            \$result = [
-                'messages' => [500, 'Created failed.', '']
-            ];
-        }
+    public function read(array \$data) {
+        \$query = $model::data();
+        return \$this->datatables->of(\$query)
+            ->filter(function(\$query) use (\$data) {
+                if (!empty(\$data['name'])) {
+                    \$query->where('name', 'admin');
+                }
+                return \$query;
+            })
+            ->addColumn('percentage', function(\$query){
+                return \"\";
+            })
+            ->make();
+    }
 
-        return \$result;
+    public function update(array \$data) {
+        return $model::updateOne(\$data['id'], [ $join_fillable
+        ]);
+    }
+
+    public function delete(array \$data) {
+        return $model::deleteOne(\$data['id']);
     }
 
 }
