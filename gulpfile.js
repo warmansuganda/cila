@@ -66,6 +66,8 @@ elixir(function(mix) {
         'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
         'bower_components/select2/dist/css/select2.min.css',
         'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css',
+        'bower_components/sweetalert2/dist/sweetalert2.min.css',
+        'bower_components/wait-me/dist/waitMe.min.css',
 
         'bower_components/admin-lte/dist/css/AdminLTE.min.css',
         'bower_components/admin-lte/dist/css/skins/skin-black.min.css',
@@ -91,6 +93,10 @@ elixir(function(mix) {
       'bower_components/fastclick/lib/fastclick.js',
       'bower_components/datatables.net/js/jquery.dataTables.min.js',
       'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js',
+      'bower_components/sweetalert2/dist/sweetalert2.min.js',
+      'bower_components/jquery-form/dist/jquery.form.min.js',
+      'bower_components/wait-me/dist/waitMe.min.js',
+      'bower_components/nestable/jquery.nestable.js',
 
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.js',
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.date.extensions.js',
