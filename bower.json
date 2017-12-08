@@ -19,6 +19,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "iCheck": "icheck#^1.0.2",
     "nprogress": "^0.2.0",
-    "jquery.uniform": "uniform#^4.2.2"
+    "jquery.uniform": "uniform#^4.2.2",
+    "nestable": "*"
   }
 }
