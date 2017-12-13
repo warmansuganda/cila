@@ -6,15 +6,27 @@
 			type: typeof object.attr('method') !== 'undefined' ? object.attr('method') : 'POST',
             url: typeof object.attr('action') !== 'undefined' ? object.attr('action') : null,
             data: null,
-            notification: {
-                timeout: 4000,
-                messageError: 'Terjadi Kesalahan !',
-                messageSuccess: 'Proses Berhasil !'
-            },
-            validateMessage: {
-                title: true,
-                titlePosition: 'after',
-                listPosition: 'inline'
+            messages : {
+            	confirm: {
+					title: 'Apakah anda yakin?',
+					text: "Data yang anda inputkan akan disimpan.",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Ya',
+					cancelButtonText: 'Tidak'
+				},
+            	validation: {
+            		title: true,
+	                titlePosition: 'after',
+	                listPosition: 'inline'
+            	},
+            	success: {
+            		title: 'Tersimpan!',
+					text: "Data yang anda inputkan berhasil disimpan.",
+					type: 'success',
+            	}
             },
             before: function (event) {},
 			success: function (event, data) {},
@@ -39,7 +51,7 @@
                     
                     field.closest('.form-group').addClass('has-error');
 
-                    if (options.validateMessage.title) {
+                    if (options.messages.validation.title) {
                         var manual_target = $('#error_' + key, object);
                         
                         if (manual_target.length) {
@@ -49,7 +61,7 @@
 
                           field.closest('.form-group').addClass('has-error').find('span.help-block.error').remove();
 
-                          if (options.validateMessage.titlePosition == 'top' || options.validateMessage.titlePosition == 'before') {
+                          if (options.messages.validation.titlePosition == 'top' || options.messages.validation.titlePosition == 'before') {
                           	  if (_group.length) {
 	                              _group.before('<span class="help-block error"> ' + value + ' </span>');
 	                          } else if (_selectize.length) {
@@ -89,13 +101,15 @@
                 	options.before.call(this);
                 }, 
                 success: function (data) {
-                	console.log(data);
 					swal(
-				      'Deleted!',
-				      'Your file has been deleted.',
-				      'success'
-				    );
-                	options.success.call(this);
+				      options.messages.success.title,
+				      options.messages.success.text,
+				      options.messages.success.type
+				    ).then((result) => {
+					  if (result.value) {
+                		options.success.call(this);
+					  }
+					});
                 },
                 error: function (data) {
 					errorMessage(data);
@@ -106,15 +120,7 @@
 
 		return {
 			submit: function() {
-				swal({
-				  title: 'Are you sure?',
-				  text: "You won't be able to revert this!",
-				  type: 'warning',
-				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Yes, delete it!'
-				}).then((result) => {
+				swal(options.messages.confirm).then((result) => {
 				  if (result.value) {
 				  	ajaxSubmit();
 				  }

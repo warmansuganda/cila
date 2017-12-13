@@ -3,7 +3,7 @@
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	      <span aria-hidden="true">×</span></button>
-	    <h4 class="modal-title">Add New</h4>
+	    <h4 class="modal-title">Tambah {{ $title }}</h4>
 	  </div>
 
 	  {{ form_open($module . '/create' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}
@@ -28,7 +28,7 @@
 		</div>
 
 		<div class="form-group">
-		  	<label for="icon" class="col-sm-2 control-label"> Icon <sup class="text-red">*</sup></label>
+		  	<label for="icon" class="col-sm-2 control-label"> Icon</label>
 	        <div class="col-md-8">
 	            <div class="input-group">
 	                <span class="input-group-addon"><i class="fa fa-photo"></i></span>
@@ -38,7 +38,7 @@
 	    </div>
 
 		<div class="form-group">
-		  <label for="name" class="col-sm-2 control-label"> Deskripsi <sup class="text-red">*</sup></label>
+		  <label for="name" class="col-sm-2 control-label"> Deskripsi</label>
 		  <div class="col-sm-10">
           	{{ form_textarea('description', '', ['class' => 'form-control', 'style' => 'height: 80px' ]) }}
 		  </div>

@@ -20,7 +20,7 @@
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Add New', true, true] ])
+            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true, true] ])
           </div>
           <div id="nestable" data-source="{{ base_url($module) }}/read" class="box-body">
           </div>

@@ -9,8 +9,11 @@ class MenusRepository extends BaseRepository {
 
     public function getInput($request) {
         $this->data = [ 
-            'name'   => $request('name'),
-            'description'   => $request('description')
+            'name'        => $request('name'),
+            'description' => $request('description'),
+            'url'         => $request('url'),
+            'icon'        => $request('icon'),
+            'parent_id'   => $request('parent_id')
         ];
 
     }
@@ -21,12 +24,25 @@ class MenusRepository extends BaseRepository {
             $this->rules = [ 
                 [
                     'field' => 'name',
-                    'label' => 'name',
+                    'label' => 'Nama',
                     'rules' => 'required'
-                ],
+                ], [
+                    'field' => 'url',
+                    'label' => 'URL',
+                    'rules' => 'required'
+                ]
+            ];
+
+            break;
+        case 'update':
+            $this->rules = [ 
                 [
-                    'field' => 'description',
-                    'label' => 'description',
+                    'field' => 'name',
+                    'label' => 'Nama',
+                    'rules' => 'required'
+                ], [
+                    'field' => 'url',
+                    'label' => 'URL',
                     'rules' => 'required'
                 ]
             ];

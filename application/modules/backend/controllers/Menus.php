@@ -6,8 +6,8 @@ class Menus extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'title'   => 'Menus',
-            'description'   => 'Menus Management',
+            'title'   => 'Menu',
+            'description'   => 'Manajemen Menu',
         ]);
 
         $this->repo = new MenusRepository();
