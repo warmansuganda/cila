@@ -23,6 +23,7 @@
     "nestable": "*",
     "sweetalert2": "^7.0.8",
     "wait-me": "*",
-    "jquery-form": "^4.2.2"
+    "jquery-form": "^4.2.2",
+    "toastr": "^2.1.3"
   }
 }

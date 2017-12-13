@@ -1,8 +1,13 @@
 <div class="box-title pull-left">
   @if (isset($button[2]) && $button[2])
-   <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
-      {{ isset($button[0]) ? $button[0] : '' }} {{ isset($button[1]) ? $button[1] : '' }}
-   </button>
+    <?php 
+        $class = ['class' => 'btn btn-info btn-sm'];
+        if (isset($button[3]) && $button[3]) {
+            $class['data-toggle'] = 'modal';
+            $class['data-container'] = '#modal-form';
+        }
+    ?>
+    {{ anchor($button[0], $button[1], $class) }}
   @else
     <i class="fa fa-search" style="margin: 5px;"></i>
   @endif

@@ -29,18 +29,16 @@ class GroupsService extends BaseService {
                 return $query;
             })
             ->addColumn('checkbox', function($query) use ($options) {
-                $html = '<div class="checkbox-custom checkbox-default">';
-                $html .= form_checkbox('id[]', $options['encryption']->encode($query->id), FALSE, ['class' => 'checkbox-id']);
-                $html .= '<label></label>';
-
-                return $html;
+                return form_checkbox('id[]', $options['encryption']->encode($query->id), FALSE, ['class' => 'checkbox-id']);
             })
             ->addColumn('status', function($query) {
-                return $query->status ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Unactive</span>';
+                return dropdown_status($query->status);
             })
             ->addColumn('action', function($query) use ($options) {
                 $action[] = anchor($options['module'] . '/edit/' . $options['encryption']->encode($query->id), '<i class="fa fa-edit"></i> Edit', [
-                    'class' => 'btn btn-warning btn-xs'
+                    'class' => 'btn btn-warning btn-xs',
+                    'rel' => 'tooltip',
+                    'title' => 'Edit'
                 ]);
                 $action[] = anchor($options['module'] . '/delete/' . $options['encryption']->encode($query->id), '<i class="fa fa-trash"></i> Delete', [
                     'class' => 'btn btn-danger btn-xs'

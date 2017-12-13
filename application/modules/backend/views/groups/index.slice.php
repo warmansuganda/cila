@@ -6,21 +6,14 @@
 
 @section('content')
 <section class="content-header">
-  <h1>
-    {{ $title }}
-    <small>{{ $description }}</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
-  </ol>
+  @include('components.content-header', ['title' => $title, 'description' => $description, 'breadcrumb' => isset($breadcrumb) ? $breadcrumb : []])
 </section>
 <section class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            @include('components.index-tools', [ 'button' => ['<i class="fa fa-plus"></i>', 'Add New', true] ])
+            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Add New', true] ])
           </div>
           <div class="box-header with-border">
             {{ form_open() }}
@@ -45,7 +38,7 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">Status</label>
                   <div class="col-md-9">
-                    {{ form_dropdown('description', [], '', ['class' => 'form-control filter-select']) }}
+                    {{ form_dropdown('description', dropdown_status(), '', ['class' => 'form-control filter-select']) }}
                   </div>
                 </div>
               </div>
@@ -54,9 +47,6 @@
           </div>
           <div class="box-body">
             @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Status', 'Action'], 'data_source' => $module . '/read' ])
-          </div>
-          <div class="box-footer">
-            
           </div>
         </div>
       </div>
@@ -75,7 +65,14 @@
           {data: 'description', name: 'description'},
           {data: 'status', name: 'status'},
           {data: 'action', name:'id', className:'hide-orderable-node'}
-        ]
+        ],
+        onComplete: function() {
+          $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+          });
+        }
     });
   })
 </script>

@@ -77,8 +77,23 @@ class BaseController extends MX_Controller {
         return $data;
     }
 
-    protected function serveJSON($data) {
-        echo json_encode($data);
+    protected function serveJSON($data, $code = 200, $status = 'success', $message = 'OK') {
+        $output = $data;
+
+        if (is_array($data)) {
+            $code = isset($data['code']) ? $data['code'] : $code;          
+
+            $output = [
+                'code'    => $code,
+                'status'  => isset($data['status']) ? $data['status'] : $status,
+                'message' => isset($data['message']) ? $data['message'] : $message,
+                'data' => isset($data['data']) ? $data['data'] : NULL,
+            ];
+        }
+
+        http_response_code($code);
+        header('Content-type:application/json;charset=utf-8');
+        echo json_encode($output);
     }
 
     protected function serveView($data = [], $path = '') {

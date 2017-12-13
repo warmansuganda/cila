@@ -7,6 +7,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="{{ base_url() . elixir('assets/css/main.min.css') }}">
+	<style type="text/css">
+	</style>
 	@yield('css')
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -36,8 +38,12 @@
 		</footer>
 	</div> 
 
+	<!-- BOX MODAL -->
+	<div class="modal" id="modal-form" data-backdrop="static"></div>
+    <div class="modal container" id="modal-wide" data-backdrop="static"></div>
+
 	<script type="text/javascript" src="{{ base_url() . elixir('assets/js/main.min.js') }}"></script>
-	<!-- <script type="text/javascript" src="{{ base_url('resources/js/clock.js') }}"></script> -->
+	<script type="text/javascript" src="{{ base_url('resources/js/form.js') }}"></script>
 	<script type="text/javascript">
 		NProgress.start();
 	</script>

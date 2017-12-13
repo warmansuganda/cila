@@ -68,6 +68,7 @@ elixir(function(mix) {
         'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css',
         'bower_components/sweetalert2/dist/sweetalert2.min.css',
         'bower_components/wait-me/dist/waitMe.min.css',
+        'bower_components/toastr/toastr.min.css',
 
         'bower_components/admin-lte/dist/css/AdminLTE.min.css',
         'bower_components/admin-lte/dist/css/skins/skin-black.min.css',
@@ -97,18 +98,20 @@ elixir(function(mix) {
       'bower_components/jquery-form/dist/jquery.form.min.js',
       'bower_components/wait-me/dist/waitMe.min.js',
       'bower_components/nestable/jquery.nestable.js',
+      'bower_components/toastr/toastr.min.js',
 
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.js',
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.date.extensions.js',
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.extensions.js',
       'bower_components/admin-lte/plugins/timepicker/bootstrap-timepicker.min.js',
 
-      'resources/js/clock.js',
-      'resources/js/datatable.js',
-      
       'bower_components/admin-lte/dist/js/adminlte.min.js',
       'bower_components/admin-lte/dist/js/demo.js',
 
+      'resources/js/clock.js',
+      'resources/js/datatable.js',
+      // 'resources/js/form.js',
+      'resources/js/custome.js',
 
     ], 'public/assets/js/main.min.js', './');
 

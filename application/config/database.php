@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'subangmaju',
-	'database' => 'bijb_finance',
-	'dbdriver' => 'mysqli',
+	'hostname' => DB_HOSTNAME,
+	'username' => DB_USERNAME,
+	'password' => DB_PASSWORD,
+	'database' => DB_DATABASE,
+	'dbdriver' => DB_DBDRIVER,
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

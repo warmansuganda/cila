@@ -30,12 +30,18 @@ class BaseModel extends Eloquent
 
         if ($event) {
             $result = [
-                '_id' => $event->id,
-                'messages' => [200, 'Created successfully.', '']
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Created successfully.',
+                'data' => [
+                    '_id' => $event->id,
+                ]
             ];
         } else {
             $result = [
-                'messages' => [500, 'Created failed.', '']
+                'code' => 500,
+                'status' => 'error',
+                'message' => 'Created failed.'
             ];
         }
         return $result;
@@ -49,17 +55,26 @@ class BaseModel extends Eloquent
 
             if ($event) {
                 $result = [
-                    '_id' => $id,
-                    'messages' => [200, 'Updated successfully.', '']
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'data' => [
+                        '_id' => $id,
+                    ]
                 ];
+
             } else {
                 $result = [
-                    'messages' => [500, 'Updated failed.', '']
+                    'code' => 500,
+                    'status' => 'error',
+                    'message' => 'Updated failed.'
                 ];
             }
         } else {
             $result = [
-                'messages' => [500, 'Can\'t find id.', '']
+                'code' => 500,
+                'status' => 'error',
+                'message' => 'Can\'t find id.'
             ];
         }
         return $result;
@@ -73,17 +88,26 @@ class BaseModel extends Eloquent
 
             if ($event) {
                 $result = [
-                    '_id' => $id,
-                    'messages' => [200, 'Deleted successfully.', '']
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'data' => [
+                        '_id' => $id,
+                    ]
                 ];
+
             } else {
                 $result = [
-                    'messages' => [500, 'Deleted failed.', '']
+                    'code' => 500,
+                    'status' => 'error',
+                    'message' => 'Updated failed.'
                 ];
             }
         } else {
             $result = [
-                'messages' => [500, 'Can\'t find id.', '']
+                'code' => 500,
+                'status' => 'error',
+                'message' => 'Can\'t find id.'
             ];
         }
         return $result;

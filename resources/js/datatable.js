@@ -52,12 +52,11 @@
 
                 columns: options.columns,
 
-                // fnInitComplete: function () {
-                //     $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
-                //     $('[rel="tooltip"]').tooltip();
-
-                //     options.onComplete.call(object);
-                // },
+                fnInitComplete: function () {
+                    $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');
+                    $('[rel="tooltip"]').tooltip();
+                    options.onComplete.call(object);
+                },
 
                 // drawCallback: function( settings ) {
                 //     $(this).find('[data-sorting = false]').attr('class', 'sorting_disabled');

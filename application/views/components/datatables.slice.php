@@ -5,7 +5,26 @@
        data-table-filter="{{ isset($filter_id) ? $filter_id :  '#form-filter' }}">
     <thead>
 	    <tr>
-	    	<th></th>
+	    	<th>
+	    		<div class="btn-group btn-group-dt-delete">
+		    		<button type="button" class="btn btn-default btn-flat dropdown-toggle btn-dropdown-action" data-toggle="dropdown" aria-expanded="false" style="width: 22px;height: 22px; padding: 0px;">
+		            	<span class="caret"></span>
+		                <span class="sr-only">Toggle Dropdown</span>
+		             </button>
+		             <ul class="dropdown-menu" role="menu">
+		                <li>
+		                  	{{ anchor('#', '<i class="fa fa-check-square-o"></i> Sellect All', ['class' => 'btn-checked-all'  ]) }}
+		                </li>
+		                <li>
+		                  	{{ anchor('#', '<i class="fa fa-square-o"></i> Deselect All', ['class' => 'btn-unchecked-all'  ]) }}
+		                </li>
+		                <li class="divider"></li>
+		                <li>
+		                  	{{ anchor('#', '<i class="fa fa-trash"></i> Delete Selected', ['class' => 'btn-delete'  ]) }}
+		                </li>
+		            </ul>
+		        </div>
+	    	</th>
 	    	@if (isset($header) && count($header) > 0)
 	    		@foreach($header as $key => $value)
 		    		<th>{{ $value }}</th>
