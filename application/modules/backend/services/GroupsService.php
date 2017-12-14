@@ -18,7 +18,7 @@ class GroupsService extends BaseService {
         $query = GroupsModel::data();
         $options = [
             'module'     => 'backend/groups',
-            'encryption' => $this->encryption
+            'encrypt' => $this->encrypt
         ];
 
         return $this->datatables->of($query)
@@ -29,18 +29,18 @@ class GroupsService extends BaseService {
                 return $query;
             })
             ->addColumn('checkbox', function($query) use ($options) {
-                return form_checkbox('id[]', $options['encryption']->encode($query->id), FALSE, ['class' => 'checkbox-id']);
+                return form_checkbox('id[]', $options['encrypt']->encode($query->id), FALSE, ['class' => 'checkbox-id']);
             })
             ->addColumn('status', function($query) {
                 return dropdown_status($query->status);
             })
             ->addColumn('action', function($query) use ($options) {
-                $action[] = anchor($options['module'] . '/edit/' . $options['encryption']->encode($query->id), '<i class="fa fa-edit"></i> Edit', [
+                $action[] = anchor($options['module'] . '/edit/' . $options['encrypt']->encode($query->id), '<i class="fa fa-edit"></i> Edit', [
                     'class' => 'btn btn-warning btn-xs',
                     'rel' => 'tooltip',
                     'title' => 'Edit'
                 ]);
-                $action[] = anchor($options['module'] . '/delete/' . $options['encryption']->encode($query->id), '<i class="fa fa-trash"></i> Delete', [
+                $action[] = anchor($options['module'] . '/delete/' . $options['encrypt']->encode($query->id), '<i class="fa fa-trash"></i> Delete', [
                     'class' => 'btn btn-danger btn-xs'
                 ]);
                 return implode(' ', $action);

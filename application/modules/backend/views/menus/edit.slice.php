@@ -3,19 +3,20 @@
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	      <span aria-hidden="true">×</span></button>
-	    <h4 class="modal-title">Tambah {{ $title }}</h4>
+	    <h4 class="modal-title">Edit {{ $title }}</h4>
 	  </div>
 
-	  {{ form_open($module . '/create' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}
+	  {{ form_open($module . '/update' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}
 
-	  {{ form_hidden('parent_id', $parent_id ) }}
+	  {{ form_hidden('grid_id', $data['id']) }}
+	  {{ form_hidden('parent_id', $data['parent_id']) }}
 
 	  <div class="modal-body">
 	    
 		<div class="form-group">
 		  <label for="name" class="col-sm-2 control-label"> Nama <sup class="text-red">*</sup></label>
 		  <div class="col-sm-10">
-		    {{ form_input('name', '', ['class' => 'form-control']) }}
+		    {{ form_input('name', $data['name'], ['class' => 'form-control']) }}
 		  </div>
 		</div>
 
@@ -24,7 +25,7 @@
 		  <div class="col-sm-10">
 		    <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-link"></i></span>
-                {{ form_input('url', '', ['class' => 'form-control']) }}
+                {{ form_input('url', $data['url'], ['class' => 'form-control']) }}
             </div>
 		  </div>
 		</div>
@@ -34,7 +35,7 @@
 	        <div class="col-md-8">
 	            <div class="input-group">
 	                <span class="input-group-addon"><i class="fa fa-photo"></i></span>
-	                {{ form_input('icon', '', ['class' => 'form-control']) }}
+	                {{ form_input('icon', $data['icon'], ['class' => 'form-control']) }}
 	            </div>
 	        </div>
 	    </div>
@@ -42,7 +43,7 @@
 		<div class="form-group">
 		  <label for="name" class="col-sm-2 control-label"> Deskripsi</label>
 		  <div class="col-sm-10">
-          	{{ form_textarea('description', '', ['class' => 'form-control', 'style' => 'height: 80px' ]) }}
+          	{{ form_textarea('description', $data['description'], ['class' => 'form-control', 'style' => 'height: 80px' ]) }}
 		  </div>
 		</div>
 

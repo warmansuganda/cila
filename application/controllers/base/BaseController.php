@@ -63,6 +63,17 @@ class BaseController extends MX_Controller {
         return implode('/', $result);
     }
 
+    protected function setViewData($key, $value)
+    {
+        if (is_array($key)) {
+            foreach ($key as $k => $v) {
+                $this->view_data[$k] = $v;
+            }
+        } else {
+            $this->view_data[$key] = $value;
+        }
+    }
+
     protected function getViewData() {
         $data = $this->view_data;
         if (!isset($data['module'])) {

@@ -13,6 +13,7 @@ class Migration_menus extends CI_Migration {
                 $table->string('description')->nullable();
                 $table->string('url', 100)->nullable();
                 $table->string('icon', 50)->nullable();
+                $table->integer('order')->nullable();
                 $table->timestamps();
             });
         }

@@ -9,11 +9,13 @@ class MenusRepository extends BaseRepository {
 
     public function getInput($request) {
         $this->data = [ 
-            'name'        => $request('name'),
-            'description' => $request('description'),
-            'url'         => $request('url'),
-            'icon'        => $request('icon'),
-            'parent_id'   => $request('parent_id')
+            'id'              => $request('grid_id'),
+            'name'            => $request('name'),
+            'description'     => $request('description'),
+            'url'             => $request('url'),
+            'icon'            => $request('icon'),
+            'parent_id'       => $request('parent_id'),
+            'nestable_output' => $request('nestable_output'),
         ];
 
     }

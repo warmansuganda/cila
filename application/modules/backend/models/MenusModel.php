@@ -8,7 +8,11 @@ class MenusModel extends BaseModel {
      */ 
     protected $fillable = [ 
         'name',
-        'description'
+        'description',
+        'url',
+        'icon',
+        'order',
+        'parent_id'
     ];
 
 }

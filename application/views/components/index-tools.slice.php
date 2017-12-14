@@ -1,10 +1,10 @@
 <div class="box-title pull-left">
   @if (isset($button[2]) && $button[2])
     <?php 
-        $class = ['class' => 'btn btn-info btn-sm'];
+        $class = ['class' => 'btn btn-primary btn-sm'];
         if (isset($button[3]) && $button[3]) {
             $class['data-toggle'] = 'modal';
-            $class['data-container'] = '#modal-form';
+            $class['data-target'] = '#modal-form';
         }
     ?>
     {{ anchor($button[0], $button[1], $class) }}
