@@ -6,24 +6,23 @@
 
 @section('content')
 <section class="content-header">
-  <h1>
-    {{ $title }}
-    <small>{{ $description }}</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
-  </ol>
+  @include('components.content-header', ['title' => $title, 'description' => $description, 'breadcrumb' => isset($breadcrumb) ? $breadcrumb : []])
 </section>
 <section class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true, true] ])
+            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true, true], 'tools' => false ])
+
+            <div class="box-title pull-right">
+                <div class="actions" id="nestable-menu">
+                    <button type="button" class="btn btn-sm btn-default" data-action="expand-all">Expand All</button>
+                    <button type="button" class="btn btn-sm btn-default" data-action="collapse-all">Collapse All</button>
+                </div>
+            </div>
           </div>
-          <div id="nestable" data-source="{{ base_url($module) }}/read" class="box-body">
-          </div>
+          <div id="nestable" data-source="{{ base_url($module) }}/read" class="box-body"></div>
         </div>
       </div>
     </div>
@@ -35,6 +34,7 @@
   function loadNestable() {
     var $nestable = $('#nestable');
     var $source = $nestable.data('source');
+
     $('.box-widget').waitMe();
     $nestable.load($source, function(){
       $('.box-widget').waitMe("hide");
@@ -46,6 +46,16 @@
   $(function(){
     initModalAjax();
     loadNestable();
+
+    $('#nestable-menu').on('click', function (e) {
+        var target = $(e.target), action = target.data('action');
+        if (action === 'expand-all') {
+            $('.dd').nestable('expandAll');
+        }
+        if (action === 'collapse-all') {
+            $('.dd').nestable('collapseAll');
+        }
+    });
   })
 </script>
 @endsection

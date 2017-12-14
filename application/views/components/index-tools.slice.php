@@ -12,6 +12,8 @@
     <i class="fa fa-search" style="margin: 5px;"></i>
   @endif
 </div>
+
+@if(!isset($tools) || $tools)
 <div class="box-title pull-right">
     <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-gear"></i>
@@ -37,3 +39,4 @@
         @endif
     </ul>
 </div>
+@endif
