@@ -5,13 +5,13 @@ class Home extends BaseController {
 
     function __construct() {
         parent::__construct([
-            'title'   => 'Home',
+            'title'       => 'Home',
+            'description' => 'Controll panel'
         ]);
     }
 
-    public function index() {
-        $data = $this->getViewData();
-        $this->slice->view($data['module'] . "/index", $data);
+    public function getIndex() {
+        $this->serveView();
     }
 
     public function test($value='')

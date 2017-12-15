@@ -9,6 +9,7 @@ class GroupsSeeder extends Seeder {
         $data = [
             'name'        => 'admin',
             'description' => 'Administrator',
+            'status'      => true
         ];
 
         GroupsModel::create($data);

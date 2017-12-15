@@ -18,6 +18,12 @@
     "admin-lte": "^2.4.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "iCheck": "icheck#^1.0.2",
-    "nprogress": "^0.2.0"
+    "nprogress": "^0.2.0",
+    "jquery.uniform": "uniform#^4.2.2",
+    "nestable": "*",
+    "sweetalert2": "^7.0.8",
+    "wait-me": "*",
+    "jquery-form": "^4.2.2",
+    "toastr": "^2.1.3"
   }
 }

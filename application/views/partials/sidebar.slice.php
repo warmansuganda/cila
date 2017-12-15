@@ -11,6 +11,8 @@
 </ul>
 <!-- sidebar menu: : style can be found in sidebar.less -->
 
+{{ $this->navigation->make() }}
+
 <ul class="sidebar-menu">
   <li><a href="#">&nbsp;</a></li>
 </ul>

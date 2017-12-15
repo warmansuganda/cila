@@ -27,6 +27,7 @@ abstract class BaseRepository {
         $this->setValidationRules();
 
         if ($this->rules) {
+            $this->ci->form_validation->set_data($this->getData());
             $this->ci->form_validation->set_rules($this->rules);
 
             if ($this->ci->form_validation->run() == false) {
@@ -41,7 +42,12 @@ abstract class BaseRepository {
     public function startProcess(string $operation_type, array $request = []) {
         $this->operation_type = $operation_type;
         if (!$this->validate($request)) {
-            return $this->getErrors();
+            return [
+                'code' => 422,
+                'status' => 'fail',
+                'message' => http_response_text(422),
+                'data' => $this->getErrors()
+            ];
         }
 
         return $this->processor->run($operation_type, $this->getData());
