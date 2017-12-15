@@ -10,6 +10,7 @@ class Migration_groups extends CI_Migration {
                 $table->uuid('id')->primary();
                 $table->string('name', 20)->unique();
                 $table->string('description', 100)->nullable();
+                $table->boolean('status')->nullable();
                 $table->timestamps();
             });
         }

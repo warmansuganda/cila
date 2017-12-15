@@ -21,7 +21,7 @@ class AuthRepository extends BaseRepository {
 
     public function setValidationRules() {
         switch ($this->operation_type) {
-        case 'signin':
+        case 'create':
             $this->rules = [
                 [
                     'field' => 'username',
@@ -36,7 +36,23 @@ class AuthRepository extends BaseRepository {
             ];
 
             break;
-        case 'signout':
+        case 'update':
+            $this->rules = [
+                [
+                    'field' => 'username',
+                    'label' => 'Username',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'password',
+                    'label' => 'Password',
+                    'rules' => 'required'
+                ],
+            ];
+
+            break;
+        case 'read':
+        case 'delete':
             $this->rules = [];
         }
 

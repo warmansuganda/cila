@@ -1,12 +1,7 @@
 <?php
 
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+class UsersModel extends BaseModel {
 
-class UsersModel extends Eloquent {
-
-    use UuidTrait;
-
-    public $incrementing = false;
     protected $table = 'users'; // Table name
     protected $fillable = [
         'ip_address',

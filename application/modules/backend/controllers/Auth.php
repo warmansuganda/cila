@@ -11,14 +11,14 @@ class Auth extends BaseController {
         $this->repo = new AuthRepository();
     }
 
-    public function index() {
+    public function getIndex() {
         $data = $this->getViewData();
         $data['title'] = 'Welcome';
         $data['error_message'] = $this->session->flashdata('error_message');
         $this->slice->view($data['module'] . "/signin", $data);
     }
 
-    public function signin() {
+    public function postSignin() {
         $input = $this->input->post();
         $input['ip_address'] = $this->input->ip_address();
         $input['user_agent'] = $this->input->user_agent();
@@ -36,7 +36,7 @@ class Auth extends BaseController {
         }
     }
 
-    public function signout()
+    public function getSignout()
     {
         $config_auth = $this->getConfigAuth();
         $this->session->sess_destroy();
