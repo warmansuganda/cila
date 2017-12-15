@@ -69,6 +69,7 @@ elixir(function(mix) {
         'bower_components/sweetalert2/dist/sweetalert2.min.css',
         'bower_components/wait-me/dist/waitMe.min.css',
         'bower_components/toastr/toastr.min.css',
+        'bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css',
 
         'bower_components/admin-lte/dist/css/AdminLTE.min.css',
         'bower_components/admin-lte/dist/css/skins/skin-black.min.css',
@@ -99,6 +100,7 @@ elixir(function(mix) {
       'bower_components/wait-me/dist/waitMe.min.js',
       'bower_components/nestable/jquery.nestable.js',
       'bower_components/toastr/toastr.min.js',
+      'bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js',
 
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.js',
       'bower_components/admin-lte/plugins/input-mask/jquery.inputmask.date.extensions.js',
