@@ -30,8 +30,22 @@ class MenusService extends BaseService {
             ];
         }
 
+        $options = [
+            'module'     => 'backend/menus',
+            'encrypt' => $this->encrypt
+        ];
+
         $this->ci->load->library('nestable');
-        return $this->ci->nestable->of($menus)->setBaseURL('backend/menus')->make();
+        return $this->ci->nestable->of($menus)->make(function($value) use ($options) {
+            $base_url = base_url($options['module']);
+            $id        = $value['id'];
+            $encode_id = $options['encrypt']->encode($id);
+
+            $nestable = '           <a href="' . $base_url . '/add?parent_id=' . $encode_id .  '" class="text-primary" rel="tooltip" data-placement="top" data-title="Tambah" data-toggle="modal" data-target="#modal-form" style="margin:5px"><i class="fa fa-plus"></i> Tambah Turunan</a>';
+            $nestable .= '           <a href="' . $base_url . '/edit?grid_id=' . $encode_id .  '" class="text-warning" rel="tooltip" data-placement="top" data-title="Edit" data-toggle="modal" data-target="#modal-form" style="margin:5px"><i class="fa fa-edit"></i> Edit</a>';
+            $nestable .= '           <a href="' . $base_url . '/delete" data-grid="' . $encode_id .  '" class="btn-delete text-danger" rel="tooltip"><i class="fa fa-trash"></i> Hapus</a>';
+            return $nestable;
+        });
     }
 
     public function get(array $data)

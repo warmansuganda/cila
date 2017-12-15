@@ -60,4 +60,46 @@ class GroupsService extends BaseService {
         return GroupsModel::deleteOne($data['id']);
     }
 
+    public function get_nestable(array $data) {
+        $query = MenusModel::data()->get();
+        $menus = [];
+        foreach ($query->sortBy(function($q){ return $q->order; }) as $menu) {
+            $parent_id = !empty($menu->parent_id) ? $menu->parent_id : 0;
+            $menus[$parent_id][] = [
+                'id'        => $menu->id,
+                'parent_id' => $menu->parent_id,
+                'label'     => $menu->name,
+                'icon'      => $menu->icon,
+                'url'       => $menu->url
+            ];
+        }
+
+        $options = [
+            'module'     => 'backend/menus',
+            'encrypt' => $this->encrypt
+        ];
+
+        $this->ci->load->library('nestable');
+        return $this->ci->nestable
+            ->of($menus)
+            ->options(['drag' => false])
+            ->make(function($value) use ($options) {
+                $base_url  = base_url($options['module']);
+                $id        = $value['id'];
+                $encode_id = $options['encrypt']->encode($id);
+
+                $nestable = '';
+                $nestable .= '<span class="pull-left dd-group-tools"><i class="fa fa-eye"></i></span>';
+                $nestable .= '<span class="pull-left">' . form_checkbox('id[]', $encode_id, FALSE, ['class' => 'checkbox-id']) . '</span>';
+                $nestable .= '<span class="pull-left dd-group-tools"><i class="fa fa-plus"></i></span>';
+                $nestable .= '<span class="pull-left">' . form_checkbox('id[]', $encode_id, FALSE, ['class' => 'checkbox-id']) . '</span>';
+                $nestable .= '<span class="pull-left dd-group-tools"><i class="fa fa-edit"></i></span>';
+                $nestable .= '<span class="pull-left">' . form_checkbox('id[]', $encode_id, FALSE, ['class' => 'checkbox-id']) . '</span>';
+                $nestable .= '<span class="pull-left dd-group-tools"><i class="fa fa-trash"></i></span>';
+                $nestable .= '<span class="pull-left">' . form_checkbox('id[]', $encode_id, FALSE, ['class' => 'checkbox-id']) . '</span>';
+
+                return '<div style="margin-top: -2px">' . $nestable . '</div>';
+            });
+    }
+
 }

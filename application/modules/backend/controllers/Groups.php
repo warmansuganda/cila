@@ -7,7 +7,7 @@ class Groups extends BaseController {
     function __construct() {
         parent::__construct([
             'title'       => 'Groups',
-            'description' => 'Groups Management',
+            'description' => 'Groups Manajemen',
         ]);
 
         $this->repo = new GroupsRepository();
@@ -24,6 +24,7 @@ class Groups extends BaseController {
     }
     
     public function getAdd() {
+        $this->setViewData('nestable', $this->repo->startProcess('get_nestable'));
         $this->serveView();
     }
 

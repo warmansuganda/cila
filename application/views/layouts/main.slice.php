@@ -8,8 +8,6 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="{{ base_url() . elixir('assets/css/main.min.css') }}">
-	<style type="text/css">
-	</style>
 	@yield('css')
 </head>
 <body class="hold-transition skin-black sidebar-mini">

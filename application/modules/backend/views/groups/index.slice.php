@@ -6,14 +6,14 @@
 
 @section('content')
 <section class="content-header">
-  @include('components.content-header', ['title' => $title, 'description' => $description, 'breadcrumb' => isset($breadcrumb) ? $breadcrumb : []])
+  @include('components.content-header', ['title' => $title, 'description' => $description])
 </section>
 <section class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Add New', true] ])
+            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true] ])
           </div>
           <div class="box-header with-border">
             {{ form_open() }}
@@ -64,7 +64,7 @@
           {data: 'name', name: 'name'},
           {data: 'description', name: 'description'},
           {data: 'status', name: 'status'},
-          {data: 'action', name:'id', className:'hide-orderable-node'}
+          {data: 'action', name:'id', orderable: false}
         ],
         onComplete: function() {
           $('input').iCheck({

@@ -3,7 +3,7 @@
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	      <span aria-hidden="true">×</span></button>
-	    <h4 class="modal-title">Edit {{ $title }}</h4>
+	    <h4 class="modal-title">Form Edit</h4>
 	  </div>
 
 	  {{ form_open($module . '/update' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}

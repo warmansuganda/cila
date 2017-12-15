@@ -6,7 +6,7 @@
 
 @section('content')
 <section class="content-header">
-  @include('components.content-header', ['title' => $title, 'description' => $description, 'breadcrumb' => isset($breadcrumb) ? $breadcrumb : []])
+  @include('components.content-header', ['title' => $title, 'description' => $description])
 </section>
 <section class="content">
     <div class="row">
