@@ -5,11 +5,12 @@
 <ol class="breadcrumb">
 	@if (is_array($breadcrumb) && count($breadcrumb) > 0)
 		<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-		@foreach($breadcrumb as $key => $value)
-			<li><a href="{{$key}}">{{$value}}</a></li>
+		@foreach($breadcrumb as $value)
+			<li><a href="{{$value['url']}}">{{$value['label']}}</a></li>
 		@endforeach
 	@else 
-		<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-		<li class="active">{{ $title }}</li>
+		@foreach($this->navigation->breadcrumb() as $value)
+			<li><a href="{{$value['url']}}"><i class="{{$value['icon']}}"></i> {{$value['label']}}</a></li>
+		@endforeach
 	@endif
 </ol>

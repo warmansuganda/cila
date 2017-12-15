@@ -3,6 +3,7 @@
 class Navigation
 {
 	private $ci;
+	private $breadcrumb = [];
 
 	function __construct()
 	{
@@ -57,6 +58,7 @@ class Navigation
 	{
 		if (isset($data[$active_menu])) {
 			$data[$active_menu]['active'] = true;
+			$this->breadcrumb[] = $data[$active_menu];
 			$active_menu = $data[$active_menu]['parent_id'];
 			if (!empty($active_menu)) {
 				$data = $this->setActiveMenu($data, $active_menu);
@@ -117,5 +119,21 @@ class Navigation
 		}
 
 		return $temp_menu;
+	}
+
+	public function breadcrumb()
+	{
+		$this->data();
+		$breadcrumb = [];
+		$total = count($this->breadcrumb) - 1;
+		for ($idx = $total; $idx >= 0 ; $idx--) {
+			$value = $this->breadcrumb[$idx];
+		 	$breadcrumb[$idx] = [
+		 		'label' => $value['label'],
+		 		'url' => $value['url'],
+		 		'icon' => $idx == $total ? $value['icon'] : ''
+		 	];
+		}
+		return $breadcrumb;
 	}
 }
