@@ -35,6 +35,10 @@ class Groups extends BaseController {
     }
 
     public function getEdit() {
+        $input = $this->input->get();
+        $data  = $this->repo->startProcess('get', $input);
+        $this->setViewData('data', $data);
+        $this->setViewData('nestable', $this->repo->startProcess('get_nestable', $data['menus']));
         $this->serveView();
     }
 

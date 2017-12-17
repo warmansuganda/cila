@@ -26,13 +26,19 @@
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Group Admin</label>
               <div class="col-sm-3">
-                <input type="checkbox" name="is_admin" data-on-text="Ya" data-off-text="Bukan">
+                <input type="checkbox" value="1" name="is_admin" data-on-text="Ya" data-off-text="Bukan">
               </div>
             </div>
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Deskripsi</label>
               <div class="col-sm-8">
-                {{ form_textarea('name', '', ['class' => 'form-control', 'style' => 'height: 100px;']) }}
+                {{ form_textarea('description', '', ['class' => 'form-control', 'style' => 'height: 100px;']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Status</label>
+              <div class="col-sm-5">
+                <input type="checkbox" value="1" name="status" data-on-text="Aktif" data-off-text="Tidak Aktif">
               </div>
             </div>
 
@@ -59,7 +65,7 @@
 
           </div>
           <div class="box-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Kembali</button>
+            {{ anchor($module, 'Kembali', ['class' => 'btn btn-default pull-left']) }}
             <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Simpan</button>
           </div>
           {{ form_close() }}
@@ -73,12 +79,12 @@
 <script type="text/javascript">
   $(function(){
     $("[name='is_admin']").bootstrapSwitch();
+    $("[name='status']").bootstrapSwitch();
     $('form#my-form').submit(function(e){
       e.preventDefault();
       $(this).myAjax({
           success: function (data) {
-              $('.modal').modal('hide');
-              loadNestable();
+              window.location = '{{ base_url($module) }}';
           }
         }).submit();
     });

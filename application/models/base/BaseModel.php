@@ -6,6 +6,14 @@ class BaseModel extends Eloquent
 	use UuidTrait;
 
     public $incrementing = false;
+    private $ci;
+    private $encrypt;
+
+    private function coConstruct()
+    {
+        $this->ci = &get_instance();
+        $this->encrypt = $this->ci->encrypt;
+    }
     
     public function scopeData($query, $key = NULL, $orderBy = NULL, $direction = 'asc', $offset = 0, $limit = 0)
     {
@@ -34,7 +42,7 @@ class BaseModel extends Eloquent
                 'status'  => 'success',
                 'message' => 'Created successfully.',
                 'data'    => [
-                    '_id' => $event->id,
+                    '_id' => $this->encrypt->encode($event->id),
                 ]
             ];
         } else {
@@ -59,7 +67,7 @@ class BaseModel extends Eloquent
                     'status'  => 'success',
                     'message' => 'Updated successfully.',
                     'data'    => [
-                        '_id' => $id,
+                        '_id' => $this->encrypt->encode($id),
                     ]
                 ];
 
@@ -92,7 +100,7 @@ class BaseModel extends Eloquent
                     'status'  => 'success',
                     'message' => 'Updated successfully.',
                     'data'    => [
-                        '_id' => $id,
+                        '_id' => $this->encrypt->encode($id),
                     ]
                 ];
 

@@ -154,7 +154,7 @@
 				console.log(default_options.data);
 
 				// refactor messages
-				default_messages.confirm.text  = "Data akan dihapus dan tidak dapat dikembalikan.";
+				default_messages.confirm.text  = "Data yang dihapus tidak dapat dikembalikan.";
 				default_messages.success.title = "Terhapus!";
 				default_messages.success.text  = "Data berhasil dihapus.";
 				

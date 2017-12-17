@@ -46,7 +46,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Status', 'Action'], 'data_source' => $module . '/read' ])
+            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read' ])
           </div>
         </div>
       </div>
@@ -63,6 +63,7 @@
           {data: 'checkbox', orderable: false, width: "1%"},
           {data: 'name', name: 'name'},
           {data: 'description', name: 'description'},
+          {data: 'group_admin', name: 'group_admin'},
           {data: 'status', name: 'status'},
           {data: 'action', name:'id', orderable: false}
         ],
@@ -71,6 +72,16 @@
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
             increaseArea: '20%' // optional
+          });
+
+          $('.btn-delete').click(function(){
+            $(this).myAjax({
+                  success: function (data) {
+                      oTable.reaload();
+                  }
+              }).delete();
+
+            return false;
           });
         }
     });

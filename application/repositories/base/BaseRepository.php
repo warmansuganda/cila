@@ -19,8 +19,8 @@ abstract class BaseRepository {
     
     public function validate(array $request) {
 
-        $this->getInput(function($name) use ($request){
-            return isset($request[$name]) ? $request[$name] : NULL;
+        $this->getInput(function($name, $default = NULL) use ($request){
+            return isset($request[$name]) ? $request[$name] : $default;
         });
 
         $this->cleanFromXss();
