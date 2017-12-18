@@ -9,10 +9,9 @@ class BaseModel extends Eloquent
     private $ci;
     private $encrypt;
 
-    private function coConstruct()
+    private function ciConstruct()
     {
         $this->ci = &get_instance();
-        $this->encrypt = $this->ci->encrypt;
     }
     
     public function scopeData($query, $key = NULL, $orderBy = NULL, $direction = 'asc', $offset = 0, $limit = 0)
@@ -34,91 +33,92 @@ class BaseModel extends Eloquent
 
     public function scopeCreateOne($query, array $data)
     {
-        $event = $query->create($data);
+        $this->ciConstruct();
+        try {
+            $event = $query->create($data);
 
-        if ($event) {
-            $result = [
+            return [
                 'code'    => 200,
                 'status'  => 'success',
                 'message' => 'Created successfully.',
                 'data'    => [
-                    '_id' => $this->encrypt->encode($event->id),
+                    '_id' => $this->ci->encrypt->encode($event->id),
                 ]
             ];
-        } else {
-            $result = [
+        } catch (Exception $e) {
+            return [
                 'code'    => 500,
                 'status'  => 'error',
-                'message' => 'Created failed.'
+                'message' => 'Created failed.',
+                'data'    => $e
             ];
         }
-        return $result;
     }
 
     public function scopeUpdateOne($query, $id, array $data)
     {
-        $cursor = $query->find($id);
-        if ($cursor) {
-            $event = $cursor->update($data);
+        $this->ciConstruct();
+        try {
+            $cursor = $query->find($id);
+            if ($cursor) {
+                $event = $cursor->update($data);
 
-            if ($event) {
-                $result = [
+                return  [
                     'code'    => 200,
                     'status'  => 'success',
                     'message' => 'Updated successfully.',
                     'data'    => [
-                        '_id' => $this->encrypt->encode($id),
+                        '_id' => $this->ci->encrypt->encode($id),
                     ]
                 ];
-
             } else {
-                $result = [
+                return  [
                     'code'    => 500,
                     'status'  => 'error',
-                    'message' => 'Updated failed.'
+                    'message' => 'Can\'t find id.'
                 ];
             }
-        } else {
-            $result = [
+        } catch (Exception $e) {
+            return [
                 'code'    => 500,
                 'status'  => 'error',
-                'message' => 'Can\'t find id.'
+                'message' => 'Created failed.',
+                'data'    => $e
             ];
         }
-        return $result;
     }
 
     public function scopeDeleteOne($query, $id)
     {
-        $cursor = $query->find($id);
-        if ($cursor) {
-            $event = $cursor->delete();
-
-            if ($event) {
-                $result = [
+        $this->ciConstruct();
+        try {
+            $cursor = $query->find($id);
+            if ($cursor) {
+                $event = $cursor->delete();
+                
+                return  [
                     'code'    => 200,
                     'status'  => 'success',
                     'message' => 'Updated successfully.',
                     'data'    => [
-                        '_id' => $this->encrypt->encode($id),
+                        '_id' => $this->ci->encrypt->encode($id),
                     ]
                 ];
-
             } else {
-                $result = [
+                return  [
                     'code'    => 500,
                     'status'  => 'error',
-                    'message' => 'Updated failed.'
+                    'message' => 'Can\'t find id.'
                 ];
             }
-        } else {
-            $result = [
+        } catch (Exception $e) {
+            return [
                 'code'    => 500,
                 'status'  => 'error',
-                'message' => 'Can\'t find id.'
+                'message' => 'Created failed.',
+                'data'    => $e
             ];
         }
-        return $result;
     }
 
 
