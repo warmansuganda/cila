@@ -7,34 +7,15 @@ class GroupsService extends BaseService {
     }
 
     public function create(array $data) {
-
-        try {
-            $event = GroupsModel::create([
-                'name'        => $data['name'],
-                'description' => $data['description'],
-                'status'      => $data['status'],
-            ]);
-            $id    = $event->id;
-
-            $event->menus()->attach($this->parsingAuthorities($data));
-
-            return [
-                'code'    => 200,
-                'status'  => 'success',
-                'message' => 'Created successfully.',
-                'data'    => [
-                    '_id' => $this->encrypt->encode($id),
-                ]
-            ];
-        } catch (Exception $e) {
-            return [
-                'code'    => 500,
-                'status'  => 'error',
-                'message' => 'Terjadi kesalahan sistem.',
-                'data'    => $e
-            ]; 
-        }
-
+        $authorities = $this->parsingAuthorities($data);
+        return GroupsModel::createOne([
+            'name'        => $data['name'],
+            'description' => $data['description'],
+            'is_admin'    => $data['is_admin'],
+            'status'      => $data['status'],
+        ], function($query, $event) use ($authorities){
+            $event->menus()->attach($authorities);
+        });
     }
 
     private function parsingAuthorities($input)
@@ -156,45 +137,21 @@ class GroupsService extends BaseService {
     }
 
     public function update(array $data) {
-        $id = $data['id'];
-
-        try {
-            $query = GroupsModel::find($this->encrypt->decode($id));
-            if ($query) {
-                if ($query->update($data)) {
-                    $query->menus()->sync($this->parsingAuthorities($data));
-                }
-
-                return [
-                    'code'    => 200,
-                    'status'  => 'success',
-                    'message' => 'Created successfully.',
-                    'data'    => [
-                        '_id' => $id,
-                    ]
-                ];
-            }
-
-            return [
-                'code'    => 422,
-                'status'  => 'error',
-                'message' => 'Id tidak ditemukan.',
-                'data'    => [
-                    '_id' => $id,
-                ]
-            ];
-        } catch (Exception $e) {
-            return [
-                'code'    => 500,
-                'status'  => 'error',
-                'message' => 'Terjadi kesalahan sistem.',
-                'data'    => $e
-            ]; 
-        }
+        $authorities = $this->parsingAuthorities($data);
+        return GroupsModel::updateOne($this->encrypt->decode($data['id']), [
+            'name'        => $data['name'],
+            'is_admin'    => $data['is_admin'],
+            'description' => $data['description'],
+            'status'      => $data['status'],
+        ], function($query, $event, $cursor) use ($authorities) {
+            $cursor->menus()->sync($authorities);
+        });
     }
 
     public function delete(array $data) {
-        return GroupsModel::deleteOne($data['id']);
+        return GroupsModel::deleteOne($this->encrypt->decode($data['id']), function($query, $event, $cursor) {
+            $cursor->menus()->detach();
+        });
     }
 
     public function get_nestable(array $data) {

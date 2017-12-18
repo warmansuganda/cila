@@ -100,6 +100,17 @@ class BaseController extends MX_Controller {
                 'message' => isset($data['message']) ? $data['message'] : $message,
                 'data' => isset($data['data']) ? $data['data'] : NULL,
             ];
+
+            // extend data table responses
+            if (isset($data['draw'])) {
+                $output['draw'] = $data['draw'];
+            }
+            if (isset($data['recordsTotal'])) {
+                $output['recordsTotal'] = $data['recordsTotal'];
+            }
+            if (isset($data['recordsFiltered'])) {
+                $output['recordsFiltered'] = $data['recordsFiltered'];
+            }
         }
 
         http_response_code($code);

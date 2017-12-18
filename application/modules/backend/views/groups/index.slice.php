@@ -6,7 +6,7 @@
 
 @section('content')
 <section class="content-header">
-  @include('components.content-header', ['title' => $title, 'description' => $description])
+  @include('components.content-header', ['id' => 'main-header', 'title' => $title, 'description' => $description])
 </section>
 <section class="content">
     <div class="row">
@@ -16,7 +16,7 @@
             @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true] ])
           </div>
           <div class="box-header with-border">
-            {{ form_open() }}
+            {{ form_open('', ['id' => 'form-filter']) }}
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -46,7 +46,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read' ])
+            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read' ])
           </div>
         </div>
       </div>
@@ -58,6 +58,24 @@
 <script type="text/javascript">
   $(function(){
     var autoFilter = true;
+    var initDatatable = function() {
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+      });
+
+      $('.btn-delete').click(function(){
+        $(this).myAjax({
+              success: function (data) {
+                  __reloadTable();
+              }
+          }).delete();
+
+        return false;
+      });
+    };
+
     var oTable = $('table#main-table').myDataTable({
         columns: [
           {data: 'checkbox', orderable: false, width: "1%"},
@@ -68,22 +86,29 @@
           {data: 'action', name:'id', orderable: false}
         ],
         onComplete: function() {
-          $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-          });
-
-          $('.btn-delete').click(function(){
-            $(this).myAjax({
-                  success: function (data) {
-                      oTable.reaload();
-                  }
-              }).delete();
-
-            return false;
-          });
+          initDatatable();
+        }, 
+        onDraw : function() {
+          initDatatable();
         }
+    });
+
+    var __reloadTable = function(refresh) {
+        oTable.reload(refresh);
+    }
+
+    var __resetTable = function () {
+        oTable.filterReset();
+    }
+
+    $('#main-header .reload-table').click(function(){
+      __reloadTable();
+      return false;
+    });
+
+    $('#main-header .reset-filter').click(function(){
+      __resetTable();
+      return false;
     });
   })
 </script>

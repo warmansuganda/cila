@@ -11,9 +11,9 @@ class GroupsRepository extends BaseRepository {
         $this->data = [ 
             'id'             => $request('grid_id'),
             'name'           => $request('name'),
-            'is_admin'       => $request('is_admin'),
+            'is_admin'       => $request('is_admin', 0),
             'description'    => $request('description'),
-            'status'         => $request('status', false),
+            'status'         => $request('status', 0),
             'read'           => $request('read'),
             'create'         => $request('create'),
             'update'         => $request('update'),

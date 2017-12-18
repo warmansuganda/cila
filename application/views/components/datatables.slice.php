@@ -1,4 +1,4 @@
-<table id="{{ isset($table_id) ? $table_id :  'dt-basic' }}"
+<table id="{{ isset($id) ? $id :  'dt-basic' }}"
        class="table table-striped table-hover"
        width="100%" style="margin-top: 0 !important;"
        data-table-source="{{ base_url(isset($data_source) ? $data_source : '') }}"
@@ -20,7 +20,7 @@
 		                </li>
 		                <li class="divider"></li>
 		                <li>
-		                  	{{ anchor('#', '<i class="fa fa-trash"></i> Delete Selected', ['class' => 'btn-delete'  ]) }}
+		                  	{{ anchor('#', '<i class="fa fa-trash"></i> Delete Selected', ['class' => 'btn-delete-selected'  ]) }}
 		                </li>
 		            </ul>
 		        </div>

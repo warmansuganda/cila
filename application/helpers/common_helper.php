@@ -102,19 +102,20 @@ if (!function_exists('string_contains')) {
 }
 
 if (!function_exists('dropdown_status')) {
-    function dropdown_status($key = '') {
+    function dropdown_status($key = NULL) {
+        // return $key;
         $status = [
-            '1' => [
-                'label' => 'Active',
+            1 => [
+                'label' => 'Aktif',
                 'class' => 'label label-success',
             ],
-            '0' => [
-                'label' => 'Inactive',
+            0 => [
+                'label' => 'Tidak Aktif',
                 'class' => 'label label-danger',
             ],
         ];
 
-        if (!empty($key)) {
+        if ( !is_null($key)) {
             return isset($status[$key]) ? '<span class="' . $status[$key]['class'] . '">' . $status[$key]['label'] . '</span>' : '-';
         } else {
             $options = ['' => '-Select-'];

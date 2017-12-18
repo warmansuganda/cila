@@ -151,7 +151,7 @@
 					grid_id: object.attr('data-grid')
 				});
 
-				console.log(default_options.data);
+				// console.log(default_options.data);
 
 				// refactor messages
 				default_messages.confirm.text  = "Data yang dihapus tidak dapat dikembalikan.";
