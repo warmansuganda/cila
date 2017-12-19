@@ -1,3 +1,9 @@
+// Page Setup
+function initPage() {
+    $('[data-toggle="switch"]').bootstrapSwitch();
+    $('select.select2').select2();
+}
+
 //REMOTE MODAL
 function initModalAjax(selector) {
     var selector_triger = typeof selector !== 'undefined' ? selector : '[data-toggle="modal"]';
@@ -21,25 +27,43 @@ function initModalAjax(selector) {
 }
 
 // DATA TABLES
-function initDatatable (table_id, callback_delete) {
-  $('input', table_id).iCheck({
-    checkboxClass: 'icheckbox_square-blue',
-    radioClass: 'iradio_square-blue',
-    increaseArea: '20%' // optional
-  });
+function initDatatableAction(table_id, callback) {
+    $('input', table_id).iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+    });
 
-  $('.btn-delete', table_id).click(function(){
-    $(this).myAjax({
-          success: function (data) {
-              callback_delete();
-          }
-      }).delete();
+    $('.btn-delete', table_id).click(function(){
+        $(this).myAjax({
+              success: function (data) {
+                  callback();
+              }
+          }).delete();
 
-    return false;
-  });
+        return false;
+    });
+
 }
 
-function initDatatableChecked (table_id, callback_delete) {
+function initDatatableTools(table_id, header_id, oTable) {
+
+    var $form_filter = $(table_id).attr('data-table-filter'); 
+
+    $($form_filter).submit(function (e) {
+        e.preventDefault();
+        oTable.reload();
+    });
+
+    $('.filter-select', $($form_filter)).change(function (event) {
+        event.preventDefault();
+
+        var $auto_filter = $(table_id).attr('data-auto-filter'); 
+        if ($auto_filter == 'true') {
+            oTable.reload();
+        }
+    });
+
     $('.btn-checked-all, .btn-unchecked-all', table_id).click(function () {
         var id = $(this).attr('class');
 
@@ -66,7 +90,7 @@ function initDatatableChecked (table_id, callback_delete) {
                     grid_id: id
                 },
                 success: function (data) {
-                    callback_delete();
+                    oTable.reload();
                 }
             }).delete();
         } else {
@@ -74,5 +98,19 @@ function initDatatableChecked (table_id, callback_delete) {
         }
 
         return false;
+    });
+
+    $('.auto_filter', header_id).on('switchChange.bootstrapSwitch', function(event, state) {
+      $('table#main-table').attr('data-auto-filter', $(this).is(':checked') ? 'true' : 'false');
+    });
+
+    $('.reload-table', header_id).click(function(){
+      oTable.reload();
+      return false;
+    });
+
+    $('.reset-filter', header_id).click(function(){
+      oTable.filterReset();
+      return false;
     });
 }

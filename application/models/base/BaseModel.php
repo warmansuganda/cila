@@ -50,6 +50,12 @@ class BaseModel extends Eloquent
         return $query;
     }
 
+    public function scopeWhereLike($query, $name, $value)
+    {
+        $query->where($name, 'like', $value);
+        return $query;
+    }
+
     public function scopeCreateOne($query, array $data, $callback = NULL)
     {
         $this->ciConstruct();

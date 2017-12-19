@@ -22,10 +22,7 @@
         <ul class="dropdown-menu" role="menu">
             <li class="box-auto-filter">
                 Auto Filter :
-                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                    <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button>
-                    <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button>
-                </div>
+                <input type="checkbox" value="1" checked class="auto_filter" data-toggle="switch" data-size="mini" data-on-text="Ya" data-off-text="Tidak">
             </li>
             <li class="divider"></li>
             <li><a href="#" class="reload-table"><i class="fa fa-refresh"></i>Muat Ulang</a></li>

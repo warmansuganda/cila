@@ -13,8 +13,8 @@ class GroupsService extends BaseService {
             return GroupsModel::createOne([
                 'name'        => $data['name'],
                 'description' => $data['description'],
-                'is_admin'    => $data['is_admin'],
-                'status'      => $data['status'],
+                'is_admin'    => $data['is_admin'] ? 1 : 0,
+                'status'      => $data['status']  ? 1 : 0,
             ], function($query, $event) use ($authorities){
                 $event->menus()->attach($authorities);
             });
@@ -52,8 +52,16 @@ class GroupsService extends BaseService {
 
         return $this->datatables->of($query)
             ->filter(function($query) use ($data) {
-                if (!empty($data['name'])) {
-                    $query->where('name', 'admin');
+                if ($data['name'] != '') {
+                    $query->whereLike('name', '%' . $data['name'] . '%');
+                }
+                
+                if ($data['is_admin'] != '') {
+                    $query->where('is_admin', $data['is_admin']);
+                }
+                
+                if ($data['status'] != '') {
+                    $query->where('status', $data['status']);
                 }
                 return $query;
             })
@@ -150,9 +158,9 @@ class GroupsService extends BaseService {
         return BaseModel::transaction(function() use ($id, $data, $authorities) {
             return GroupsModel::updateOne($id, [
                 'name'        => $data['name'],
-                'is_admin'    => $data['is_admin'],
                 'description' => $data['description'],
-                'status'      => $data['status'],
+                'is_admin'    => $data['is_admin'] ? 1 : 0,
+                'status'      => $data['status']  ? 1 : 0,
             ], function($query, $event, $cursor) use ($authorities) {
                 $cursor->menus()->sync($authorities);
             });

@@ -27,7 +27,7 @@
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Group Admin</label>
               <div class="col-sm-3">
-                <input type="checkbox" value="1" {{ $data['is_admin'] ? 'checked' : '' }} name="is_admin" data-on-text="Ya" data-off-text="Bukan">
+                <input type="checkbox" value="1" {{ $data['is_admin'] ? 'checked' : '' }} name="is_admin"  data-toggle="switch" data-on-text="Ya" data-off-text="Bukan">
               </div>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Status</label>
               <div class="col-sm-5">
-                <input type="checkbox" value="1" {{ $data['status'] ? 'checked' : '' }}  name="status" data-on-text="Aktif" data-off-text="Tidak Aktif">
+                <input type="checkbox" value="1" {{ $data['status'] ? 'checked' : '' }}  name="status"  data-toggle="switch" data-on-text="Aktif" data-off-text="Tidak Aktif">
               </div>
             </div>
 
@@ -79,8 +79,8 @@
 @section('js')
 <script type="text/javascript">
   $(function(){
-    $("[name='is_admin']").bootstrapSwitch();
-    $("[name='status']").bootstrapSwitch();
+    initPage();
+    
     $('form#my-form').submit(function(e){
       e.preventDefault();
       $(this).myAjax({

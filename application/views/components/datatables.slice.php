@@ -2,7 +2,8 @@
        class="table table-striped table-hover"
        width="100%" style="margin-top: 0 !important;"
        data-table-source="{{ base_url(isset($data_source) ? $data_source : '') }}"
-       data-table-filter="{{ isset($filter_id) ? $filter_id :  '#form-filter' }}">
+       data-table-filter="{{ isset($filter_id) ? $filter_id :  '#form-filter' }}"
+       data-auto-filter="true">
     <thead>
 	    <tr>
 	    	<th>

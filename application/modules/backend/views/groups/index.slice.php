@@ -28,9 +28,9 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="col-md-3 control-label">Description</label>
-                  <div class="col-md-9">
-                    {{ form_input('description', '', ['class' => 'form-control filter-select']) }}
+                  <label class="col-md-4 control-label">Group Admin</label>
+                  <div class="col-md-8">
+                    {{ form_dropdown('is_admin', dropdown_status(), '', ['class' => 'form-control filter-select select2']) }}
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">Status</label>
                   <div class="col-md-9">
-                    {{ form_dropdown('description', dropdown_status(), '', ['class' => 'form-control filter-select']) }}
+                    {{ form_dropdown('status', dropdown_status(), '', ['class' => 'form-control filter-select select2']) }}
                   </div>
                 </div>
               </div>
@@ -57,7 +57,7 @@
 @section('js')
 <script type="text/javascript">
   $(function(){
-    var autoFilter = true;
+    initPage();
 
     var oTable = $('table#main-table').myDataTable({
         columns: [
@@ -68,32 +68,22 @@
           {data: 'status', name: 'status'},
           {data: 'action', name:'id', orderable: false}
         ],
-        onComplete: function() {
-          initDatatable($(this), __reloadTable);
-          initDatatableChecked($(this), __reloadTable);
-        }, 
         onDraw : function() {
-          initDatatable($(this), __reloadTable);
+          initDatatableAction($(this), function(){
+            oTable.reload();
+          });
         }
     });
 
-    var __reloadTable = function(refresh) {
-        oTable.reload(refresh);
-    }
+    // var __reloadTable = function(refresh) {
+    //     oTable.reload(refresh);
+    // }
 
-    var __resetTable = function () {
-        oTable.filterReset();
-    }
+    // var __resetTable = function () {
+    //     oTable.filterReset();
+    // }
 
-    $('#main-header .reload-table').click(function(){
-      __reloadTable();
-      return false;
-    });
-
-    $('#main-header .reset-filter').click(function(){
-      __resetTable();
-      return false;
-    });
+    initDatatableTools($('table#main-table'), $('#main-header'), oTable);
 
   })
 </script>
