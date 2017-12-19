@@ -155,5 +155,49 @@ class BaseModel extends Eloquent
         }
     }
 
+    public function scopeDeleteMany($query, array $id, $callback = NULL)
+    {
+        $this->ciConstruct();
+        try {
+            $cursors = $query->whereIn('id', $id)->get();
+            if ($cursors) {
+                $deleted_id = [];
+
+                foreach ($cursors as $cursor) {
+                    $deleted_id[] = $this->ci->encrypt->encode($cursor->id);
+                    $event = $cursor->delete();
+                    
+                    // if contain callback
+                    if (is_callable($callback)) {
+                        $callback($query, $event, $cursor);
+                    }
+
+                } 
+
+                return  [
+                    'code'    => 200,
+                    'status'  => 'success',
+                    'message' => 'Deleted successfully.',
+                    'data'    => [
+                        '_id' => $deleted_id,
+                    ]
+                ];
+            } else {
+                return  [
+                    'code'    => 500,
+                    'status'  => 'error',
+                    'message' => 'Can\'t find id.'
+                ];
+            }
+        } catch (Exception $e) {
+            return [
+                'code'    => 500,
+                'status'  => 'error',
+                'message' => 'Deleted failed.',
+                'data'    => $e
+            ];
+        }
+    }
+
 
 }

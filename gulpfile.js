@@ -111,9 +111,9 @@ elixir(function(mix) {
       'bower_components/admin-lte/dist/js/demo.js',
 
       'resources/js/clock.js',
-      'resources/js/datatable.js',
+      // 'resources/js/datatable.js',
       // 'resources/js/form.js',
-      'resources/js/custome.js',
+      // 'resources/js/custome.js',
 
     ], 'public/assets/js/main.min.js', './');
 

@@ -26,16 +26,18 @@ class GroupsService extends BaseService {
     {
         $authorities = [];
 
-        foreach ($input['read'] as $key => $value) {
-            $menu_id = $this->encrypt->decode($value);
-            $authorities[$menu_id]['authority_read'] = $value ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_create'] = isset($input['create'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_update'] = isset($input['update'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_delete'] = isset($input['delete'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_import'] = isset($input['import'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_export'] = isset($input['export'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_approve'] = isset($input['approve'][$key]) ? TRUE : FALSE;
-            $authorities[$menu_id]['authority_data'] = isset($input['data'][$key]) ? $input['data'][$key] : 1;
+        if (is_array($input['read'])) {
+            foreach ($input['read'] as $key => $value) {
+                $menu_id = $this->encrypt->decode($value);
+                $authorities[$menu_id]['authority_read'] = $value ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_create'] = isset($input['create'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_update'] = isset($input['update'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_delete'] = isset($input['delete'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_import'] = isset($input['import'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_export'] = isset($input['export'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_approve'] = isset($input['approve'][$key]) ? TRUE : FALSE;
+                $authorities[$menu_id]['authority_data'] = isset($input['data'][$key]) ? $input['data'][$key] : 1;
+            }
         }
 
         return $authorities;
@@ -70,8 +72,9 @@ class GroupsService extends BaseService {
                     'rel' => 'tooltip',
                     'title' => 'Edit'
                 ]);
-                $action[] = anchor($options['module'] . '/delete?grid_id=' . $options['encrypt']->encode($query->id), '<i class="fa fa-trash"></i> Delete', [
-                    'class' => 'btn btn-danger btn-xs btn-delete'
+                $action[] = anchor($options['module'] . '/delete', '<i class="fa fa-trash"></i> Delete',[
+                    'class' => 'btn btn-danger btn-xs btn-delete',
+                    'data-grid' => $options['encrypt']->encode($query->id)
                 ]);
                 return implode(' ', $action);
             })
@@ -157,12 +160,25 @@ class GroupsService extends BaseService {
     }
 
     public function delete(array $data) {
-        $id = $this->encrypt->decode($data['id']);
-        return BaseModel::transaction(function() use ($id) {
-            return GroupsModel::deleteOne($id, function($query, $event, $cursor) {
-                $cursor->menus()->detach();
+        if (is_array($data['id'])) {
+            $id = [];
+            foreach ($data['id'] as $value) {
+                $id[] = $this->encrypt->decode($value);
+            }
+
+            return BaseModel::transaction(function() use ($id) {
+                return GroupsModel::deleteMany($id, function($query, $event, $cursor) {
+                    $cursor->menus()->detach();
+                });
+            });    
+        } else {
+            $id = $this->encrypt->decode($data['id']);
+            return BaseModel::transaction(function() use ($id) {
+                return GroupsModel::deleteOne($id, function($query, $event, $cursor) {
+                    $cursor->menus()->detach();
+                });
             });
-        });
+        }
     }
 
     public function get_nestable(array $data) {

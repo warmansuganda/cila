@@ -46,7 +46,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read' ])
+            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
           </div>
         </div>
       </div>
@@ -58,23 +58,6 @@
 <script type="text/javascript">
   $(function(){
     var autoFilter = true;
-    var initDatatable = function() {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' // optional
-      });
-
-      $('.btn-delete').click(function(){
-        $(this).myAjax({
-              success: function (data) {
-                  __reloadTable();
-              }
-          }).delete();
-
-        return false;
-      });
-    };
 
     var oTable = $('table#main-table').myDataTable({
         columns: [
@@ -86,10 +69,11 @@
           {data: 'action', name:'id', orderable: false}
         ],
         onComplete: function() {
-          initDatatable();
+          initDatatable($(this), __reloadTable);
+          initDatatableChecked($(this), __reloadTable);
         }, 
         onDraw : function() {
-          initDatatable();
+          initDatatable($(this), __reloadTable);
         }
     });
 
@@ -110,6 +94,7 @@
       __resetTable();
       return false;
     });
+
   })
 </script>
 @endsection

@@ -20,7 +20,7 @@
 		                </li>
 		                <li class="divider"></li>
 		                <li>
-		                  	{{ anchor('#', '<i class="fa fa-trash"></i> Delete Selected', ['class' => 'btn-delete-selected'  ]) }}
+		                  	{{ anchor(isset($delete_action) ? $delete_action : '', '<i class="fa fa-trash"></i> Delete Selected', ['class' => 'btn-delete-selected'  ]) }}
 		                </li>
 		            </ul>
 		        </div>

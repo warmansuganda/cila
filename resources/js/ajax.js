@@ -147,9 +147,11 @@
 				default_options.method = 'POST';
 				default_options.url    = object.attr('href');
 
-				default_options.data = $.extend(true, default_data, {
-					grid_id: object.attr('data-grid')
-				});
+				if (typeof default_data.grid_id === 'undefined') {
+					default_options.data = $.extend(true, default_data, {
+						grid_id: object.attr('data-grid')
+					});
+				}
 
 				// console.log(default_options.data);
 

@@ -42,8 +42,9 @@
     <div class="modal container" id="modal-wide" data-backdrop="static"></div>
 
 	<script type="text/javascript" src="{{ base_url() . elixir('assets/js/main.min.js') }}"></script>
-	<script type="text/javascript" src="{{ base_url('resources/js/form.js') }}"></script>
+	<script type="text/javascript" src="{{ base_url('resources/js/datatable.js') }}"></script>
 	<script type="text/javascript" src="{{ base_url('resources/js/ajax.js') }}"></script>
+	<script type="text/javascript" src="{{ base_url('resources/js/app.js') }}"></script>
 	<script type="text/javascript">
 		NProgress.start();
 	</script>

@@ -49,7 +49,7 @@ class Groups extends BaseController {
     }    
 
     public function postDelete() {
-      $input  = $this->input->get();
+      $input  = $this->input->post();
       $return = $this->repo->startProcess('delete', $input);
       $this->serveJSON($return);
     }
