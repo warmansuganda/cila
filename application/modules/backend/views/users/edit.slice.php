@@ -18,7 +18,37 @@
           {{ form_open($module . '/update' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}
           {{ form_hidden('grid_id', $data['id']) }}
           <div class="box-body">
-            <<<form-edit>>>
+            
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> First Name <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('first_name', $data['first_name'], ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Last Name <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('last_name', $data['last_name'], ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Company <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('company', $data['company'], ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Phone <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('phone', $data['phone'], ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Email <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('email', $data['email'], ['class' => 'form-control']) }}
+              </div>
+            </div>
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Status</label>
               <div class="col-sm-5">

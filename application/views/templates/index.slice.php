@@ -17,24 +17,8 @@
           </div>
           <div class="box-header with-border">
             {{ form_open('', ['id' => 'form-filter']) }}
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="col-md-3 control-label">Name</label>
-                  <div class="col-md-9">
-                    {{ form_input('name', '', ['class' => 'form-control filter-select']) }}
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Group Admin</label>
-                  <div class="col-md-8">
-                    {{ form_dropdown('is_admin', ['' => '-Select-', 1 => 'Ya', 0 => 'Bukan'], '', ['class' => 'form-control filter-select select2']) }}
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
+            <div class="row"> <<<form-filter>>>
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-md-3 control-label">Status</label>
                   <div class="col-md-9">
@@ -46,7 +30,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
+            @include('components.datatables', [ 'id' => 'main-table', 'header' => [<<<table-header>>>], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
           </div>
         </div>
       </div>
@@ -61,11 +45,7 @@
 
     var oTable = $('table#main-table').myDataTable({
         columns: [
-          {data: 'checkbox', orderable: false, width: "1%"},
-          {data: 'name', name: 'name'},
-          {data: 'description', name: 'description'},
-          {data: 'group_admin', name: 'group_admin'},
-          {data: 'status', name: 'status'},
+          {data: 'checkbox', orderable: false, width: "1%"},<<<table-column>>>
           {data: 'action', name:'id', orderable: false}
         ],
         onDraw : function() {

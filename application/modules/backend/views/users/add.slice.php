@@ -17,7 +17,37 @@
           </div>
           {{ form_open($module . '/create' , ['class' => 'form-horizontal', 'id' => 'my-form']) }}
           <div class="box-body">
-            <<<form-add>>>
+            
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> First Name <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('first_name', '', ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Last Name <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('last_name', '', ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Company <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('company', '', ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Phone <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('phone', '', ['class' => 'form-control']) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label"> Email <sup class="text-red">*</sup></label>
+              <div class="col-sm-5">
+                {{ form_input('email', '', ['class' => 'form-control']) }}
+              </div>
+            </div>
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"> Status</label>
               <div class="col-sm-5">

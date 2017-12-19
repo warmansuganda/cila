@@ -264,7 +264,6 @@ class $name extends BaseModel {
     protected function make_controller_file($table, $path) {
         $camelcase = ucwords($table, "_");
         $title = str_replace('_', ' ', $camelcase);
-        // $name = str_replace('_', '', $camelcase) . $this->controller_suffix;
         $name = ucwords(strtolower($camelcase)) . $this->controller_suffix;
         $repo = str_replace('_', '', $camelcase) . 'Repository';
 
@@ -286,7 +285,7 @@ class $name extends BaseController {
     function __construct() {
         parent::__construct([
             'title'   => '$title',
-            'description'   => '$title Management',
+            'description'   => '$title Manajemen',
         ]);
 
         \$this->repo = new $repo();
@@ -313,6 +312,8 @@ class $name extends BaseController {
     }
 
     public function getEdit() {
+        \$input = \$this->input->get();
+        \$this->setViewData('data', \$this->repo->startProcess('get', \$input));
         \$this->serveView();
     }
 
@@ -323,7 +324,7 @@ class $name extends BaseController {
     }    
 
     public function postDelete() {
-      \$input = \$this->input->get();
+      \$input = \$this->input->post();
       \$return = \$this->repo->startProcess('delete', \$input);
       \$this->serveJSON(\$return);
     }
@@ -386,7 +387,8 @@ class $name extends BaseRepository {
     }
 
     public function getInput(\$request) {
-        \$this->data = [ $join_fillable
+        \$this->data = [ 
+            'id' => \$request('grid_id'),$join_fillable
         ];
 
     }
@@ -451,6 +453,18 @@ class $name extends BaseProcessor {
                 case 'create':
                     \$this->output = \$this->service->create(\$data);
                     break;
+                case 'read':
+                    \$this->output = \$this->service->read(\$data);
+                    break;
+                case 'get':
+                    \$this->output = \$this->service->get(\$data);
+                    break;
+                case 'update':
+                    \$this->output = \$this->service->update(\$data);
+                    break;
+                case 'delete':
+                    \$this->output = \$this->service->delete(\$data);
+                    break;
             }
 
             return true;
@@ -474,6 +488,9 @@ class $name extends BaseProcessor {
     }
 
     protected function make_service_file($table, $path, $fillable = '') {
+        $path_module = str_replace('-services', '', $path);
+        $module = str_replace('_', '-', str_replace('modules-', '', $path_module) . (!empty($path_module) ? '/' : '') .  $table);
+
         $camelcase = ucwords($table, "_");
         $title = str_replace('_', ' ', $camelcase);
         $name = str_replace('_', '', $camelcase) . 'Service';
@@ -492,12 +509,28 @@ class $name extends BaseProcessor {
         if (!empty($fillable)) {
             $split_fillable = explode('-', $fillable);
             $list_fillable = [];
+            $list_fillable_get = [];
+            $list_fillable_filter = [];
+            $list_fillable_column = [];
             foreach ($split_fillable as $value) {
                 $list_fillable[] = PHP_EOL . "            '$value' => \$data['$value']";
+                $list_fillable_get[] = PHP_EOL . "                    '$value' => \$query->$value";
+                $list_fillable_filter[] = PHP_EOL . "                if (\$data['$value'] != '') {
+                    \$query->where('$value', \$data['$value']);
+                }";
+                $list_fillable_column[] = PHP_EOL . "            ->addColumn('$value', function(\$query) {
+                return \$query->$value;
+            })";
             }
             $join_fillable = implode(',', $list_fillable);
+            $join_fillable_get = implode(',', $list_fillable_get);
+            $join_fillable_filter = implode('', $list_fillable_filter);
+            $join_fillable_column = implode('', $list_fillable_column);
         } else {
             $join_fillable = '';
+            $join_fillable_get = '';
+            $join_fillable_filter = '';
+            $join_fillable_column = '';
         }
 
         $service_template = "<?php
@@ -515,26 +548,68 @@ class $name extends BaseService {
 
     public function read(array \$data) {
         \$query = $model::data();
+        \$options = [
+            'module'  => '$module',
+            'encrypt' => \$this->encrypt
+        ];
+
         return \$this->datatables->of(\$query)
-            ->filter(function(\$query) use (\$data) {
-                if (!empty(\$data['name'])) {
-                    \$query->where('name', 'admin');
-                }
+            ->filter(function(\$query) use (\$data) { $join_fillable_filter
                 return \$query;
-            })
-            ->addColumn('percentage', function(\$query){
-                return \"\";
+            }) 
+            ->addColumn('checkbox', function(\$query) use (\$options) {
+                return form_checkbox('id[]', \$options['encrypt']->encode(\$query->id), FALSE, ['class' => 'checkbox-id']);
+            }) $join_fillable_column
+            ->addColumn('action', function(\$query) use (\$options) {
+                \$action[] = anchor(\$options['module'] . '/edit?grid_id=' . \$options['encrypt']->encode(\$query->id), '<i class=\"fa fa-edit\"></i> Edit', [
+                    'class' => 'btn btn-warning btn-xs',
+                    'rel' => 'tooltip',
+                    'title' => 'Edit'
+                ]);
+                \$action[] = anchor(\$options['module'] . '/delete', '<i class=\"fa fa-trash\"></i> Delete',[
+                    'class' => 'btn btn-danger btn-xs btn-delete',
+                    'data-grid' => \$options['encrypt']->encode(\$query->id)
+                ]);
+                return implode(' ', \$action);
             })
             ->make();
     }
 
+    public function get(array \$data)
+    {
+        \$id = \$data['id'];
+
+        if (!empty(\$id)) {
+            \$query = $model::find(\$this->encrypt->decode(\$id));
+            if (\$query) {
+                return [
+                    'id' => \$this->encrypt->encode(\$query->id), $join_fillable_get
+                ];
+            }
+        }
+
+        return NULL;
+    }
+
     public function update(array \$data) {
-        return $model::updateOne(\$data['id'], [ $join_fillable
+        return $model::updateOne(\$this->encrypt->decode(\$data['id']), [ $join_fillable
         ]);
     }
 
     public function delete(array \$data) {
-        return $model::deleteOne(\$data['id']);
+        if (is_array(\$data['id'])) {
+            \$id = [];
+            foreach (\$data['id'] as \$value) {
+                \$id[] = \$this->encrypt->decode(\$value);
+            }
+
+            return BaseModel::transaction(function() use (\$id) {
+                return $model::deleteMany(\$id);
+            });    
+        } else {
+            \$id = \$this->encrypt->decode(\$data['id']);
+            return $model::deleteOne(\$id);
+        }
     }
 
 }
@@ -571,22 +646,73 @@ class $name extends BaseService {
         if (!empty($fillable)) {
             $split_fillable = explode('-', $fillable);
             $list_fillable = [];
+            $list_fillable_column = [];
+            $list_fillable_filter = [];
+            $list_fillable_add = [];
+            $list_fillable_edit = [];
             foreach ($split_fillable as $value) {
-                $list_fillable[] = PHP_EOL . "            '$value' => \$data['$value']";
+                $label = str_replace('_', ' ', ucwords($value, '_'));
+                $list_fillable[] = "'$label'";
+                $list_fillable_column[] = PHP_EOL . "          {data: '$value', name:'$value'},";
+                $list_fillable_filter[] = PHP_EOL . "              <div class=\"col-md-6\">
+                <div class=\"form-group\">
+                  <label class=\"col-md-3 control-label\">$label</label>
+                  <div class=\"col-md-9\">
+                    {{ form_input('$value', '', ['class' => 'form-control filter-select']) }}
+                  </div>
+                </div>
+              </div>";
+                $list_fillable_add[] = PHP_EOL . "            <div class=\"form-group\">
+              <label for=\"name\" class=\"col-sm-2 control-label\"> $label <sup class=\"text-red\">*</sup></label>
+              <div class=\"col-sm-5\">
+                {{ form_input('$value', '', ['class' => 'form-control']) }}
+              </div>
+            </div>";
+            $list_fillable_edit[] = PHP_EOL . "            <div class=\"form-group\">
+              <label for=\"name\" class=\"col-sm-2 control-label\"> $label <sup class=\"text-red\">*</sup></label>
+              <div class=\"col-sm-5\">
+                {{ form_input('$value', \$data['$value'], ['class' => 'form-control']) }}
+              </div>
+            </div>";
             }
-            $join_fillable = implode(',', $list_fillable);
+
+            $join_fillable = implode(', ', $list_fillable);
+            $join_fillable_column = implode('', $list_fillable_column);
+            $join_fillable_filter = implode('', $list_fillable_filter);
+            $join_fillable_add = implode('', $list_fillable_add);
+            $join_fillable_edit = implode('', $list_fillable_edit);
         } else {
             $join_fillable = '';
+            $join_fillable_column = '';
+            $join_fillable_filter = '';
+            $join_fillable_add = '';
+            $join_fillable_edit = '';
         }
 
         $view_index = file_get_contents(APPPATH . 'views/templates/index.slice.php');
-        $this->create_file($view_index, $path, 'index.slice.php');
+        $this->create_file($this->contentReplace($view_index,[
+            '<<<form-filter>>>' => $join_fillable_filter,
+            '<<<table-header>>>' => $join_fillable,
+            '<<<table-column>>>' => $join_fillable_column,
+        ]), $path, 'index.slice.php');
         $view_add = file_get_contents(APPPATH . 'views/templates/add.slice.php');
-        $this->create_file($view_add, $path, 'add.slice.php');
+        $this->create_file($this->contentReplace($view_add,[
+            '<<<form-add>>>' => $join_fillable_add,
+        ]), $path, 'add.slice.php');
         $view_edit = file_get_contents(APPPATH . 'views/templates/edit.slice.php');
-        $this->create_file($view_edit, $path, 'edit.slice.php');
+        $this->create_file($this->contentReplace($view_edit,[
+            '<<<form-edit>>>' => $join_fillable_edit,
+        ]), $path, 'edit.slice.php');
 
         echo "$path view has successfully been created." . PHP_EOL;
+    }
+
+    private function contentReplace($str, array $search)
+    {
+        foreach ($search as $key => $value) {
+            $str = str_replace($key, $value, $str);
+        }
+        return $str;
     }
 
     protected function create_file($content = '', $path ='', $filename = 'unknown')

@@ -46,7 +46,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
+            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status'], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
           </div>
         </div>
       </div>

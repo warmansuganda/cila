@@ -31,6 +31,7 @@
 		    		<th>{{ $value }}</th>
 		    	@endforeach
 		    @endif
+		    <th>Action</th>
 	    </tr>
     </thead>
 </table>
