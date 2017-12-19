@@ -30,7 +30,7 @@
                 <div class="form-group">
                   <label class="col-md-4 control-label">Group Admin</label>
                   <div class="col-md-8">
-                    {{ form_dropdown('is_admin', dropdown_status(), '', ['class' => 'form-control filter-select select2']) }}
+                    {{ form_dropdown('is_admin', ['' => '-Select-', 1 => 'Ya', 0 => 'Bukan'], '', ['class' => 'form-control filter-select select2']) }}
                   </div>
                 </div>
               </div>

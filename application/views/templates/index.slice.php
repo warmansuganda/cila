@@ -6,24 +6,17 @@
 
 @section('content')
 <section class="content-header">
-  <h1>
-    {{ $title }}
-    <small>{{ $description }}</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
-  </ol>
+  @include('components.content-header', ['id' => 'main-header', 'title' => $title, 'description' => $description])
 </section>
 <section class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-widget">
           <div class="box-header with-border">
-            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Add New', true] ])
+            @include('components.index-tools', [ 'button' => [$module . '/add', '<i class="fa fa-plus"></i> Tambah', true] ])
           </div>
           <div class="box-header with-border">
-            {{ form_open() }}
+            {{ form_open('', ['id' => 'form-filter']) }}
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -35,9 +28,9 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="col-md-3 control-label">Description</label>
-                  <div class="col-md-9">
-                    {{ form_input('description', '', ['class' => 'form-control filter-select']) }}
+                  <label class="col-md-4 control-label">Group Admin</label>
+                  <div class="col-md-8">
+                    {{ form_dropdown('is_admin', ['' => '-Select-', 1 => 'Ya', 0 => 'Bukan'], '', ['class' => 'form-control filter-select select2']) }}
                   </div>
                 </div>
               </div>
@@ -45,7 +38,7 @@
                 <div class="form-group">
                   <label class="col-md-3 control-label">Status</label>
                   <div class="col-md-9">
-                    {{ form_dropdown('description', [], '', ['class' => 'form-control filter-select']) }}
+                    {{ form_dropdown('status', dropdown_status(), '', ['class' => 'form-control filter-select select2']) }}
                   </div>
                 </div>
               </div>
@@ -53,10 +46,7 @@
             {{ form_close() }}
           </div>
           <div class="box-body">
-            @include('components.datatables', [ 'table_id' => 'main-table', 'header' => ['Name', 'Description', 'Status', 'Action'] ])
-          </div>
-          <div class="box-footer">
-            
+            @include('components.datatables', [ 'id' => 'main-table', 'header' => ['Name', 'Description', 'Group Admin', 'Status', 'Action'], 'data_source' => $module . '/read', 'delete_action' => $module . '/delete'])
           </div>
         </div>
       </div>
@@ -67,15 +57,26 @@
 @section('js')
 <script type="text/javascript">
   $(function(){
-    var autoFilter = true;
+    initPage();
+
     var oTable = $('table#main-table').myDataTable({
         columns: [
-            {data: 'score', name: 'score'},
-            {data: 'desc', name: 'desc'},
-            {data: 'status', name: 'status'},
-            {data: 'action', name:'id', className:'hide-orderable-node'}
-        ]
+          {data: 'checkbox', orderable: false, width: "1%"},
+          {data: 'name', name: 'name'},
+          {data: 'description', name: 'description'},
+          {data: 'group_admin', name: 'group_admin'},
+          {data: 'status', name: 'status'},
+          {data: 'action', name:'id', orderable: false}
+        ],
+        onDraw : function() {
+          initDatatableAction($(this), function(){
+            oTable.reload();
+          });
+        }
     });
+
+    initDatatableTools($('table#main-table'), $('#main-header'), oTable);
+
   })
 </script>
 @endsection

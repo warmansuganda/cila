@@ -171,7 +171,6 @@ class $name extends Seeder {
         $real_path = str_replace('-', '/', $path);
 
         $controllers = APPPATH . $real_path . "/controllers/" . ucwords(strtolower($camelcase)) . $this->controller_suffix . ".php";
-        // $controllers = APPPATH . $real_path . "/controllers/" . $name . $this->controller_suffix . ".php";
         $models = APPPATH . $real_path . "/models/" .$name . "Model.php";
         $repositories = APPPATH . $real_path . "/repositories/" .$name . "Repository.php";
         $processors = APPPATH . $real_path . "/processors/" .$name . "Processor.php";
@@ -582,6 +581,10 @@ class $name extends BaseService {
 
         $view_index = file_get_contents(APPPATH . 'views/templates/index.slice.php');
         $this->create_file($view_index, $path, 'index.slice.php');
+        $view_add = file_get_contents(APPPATH . 'views/templates/add.slice.php');
+        $this->create_file($view_add, $path, 'add.slice.php');
+        $view_edit = file_get_contents(APPPATH . 'views/templates/edit.slice.php');
+        $this->create_file($view_edit, $path, 'edit.slice.php');
 
         echo "$path view has successfully been created." . PHP_EOL;
     }
