@@ -1,5 +1,6 @@
 <?php
 use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class BaseModel extends Eloquent
 {
@@ -12,6 +13,24 @@ class BaseModel extends Eloquent
     private function ciConstruct()
     {
         $this->ci = &get_instance();
+    }
+
+    public function scopeTransaction($query, $callback)
+    {
+        Capsule::beginTransaction();
+
+        $result = $callback();
+
+        if ($result['code'] == 200)
+        {
+            Capsule::commit();
+        }
+        else
+        {
+            Capsule::rollback();
+        }
+
+        return $result;
     }
     
     public function scopeData($query, $key = NULL, $orderBy = NULL, $direction = 'asc', $offset = 0, $limit = 0)

@@ -8,14 +8,18 @@ class GroupsService extends BaseService {
 
     public function create(array $data) {
         $authorities = $this->parsingAuthorities($data);
-        return GroupsModel::createOne([
-            'name'        => $data['name'],
-            'description' => $data['description'],
-            'is_admin'    => $data['is_admin'],
-            'status'      => $data['status'],
-        ], function($query, $event) use ($authorities){
-            $event->menus()->attach($authorities);
+
+       return BaseModel::transaction(function() use ($data, $authorities) {
+            return GroupsModel::createOne([
+                'name'        => $data['name'],
+                'description' => $data['description'],
+                'is_admin'    => $data['is_admin'],
+                'status'      => $data['status'],
+            ], function($query, $event) use ($authorities){
+                $event->menus()->attach($authorities);
+            });
         });
+
     }
 
     private function parsingAuthorities($input)
@@ -137,20 +141,27 @@ class GroupsService extends BaseService {
     }
 
     public function update(array $data) {
+        $id = $this->encrypt->decode($data['id']);
         $authorities = $this->parsingAuthorities($data);
-        return GroupsModel::updateOne($this->encrypt->decode($data['id']), [
-            'name'        => $data['name'],
-            'is_admin'    => $data['is_admin'],
-            'description' => $data['description'],
-            'status'      => $data['status'],
-        ], function($query, $event, $cursor) use ($authorities) {
-            $cursor->menus()->sync($authorities);
+
+        return BaseModel::transaction(function() use ($id, $data, $authorities) {
+            return GroupsModel::updateOne($id, [
+                'name'        => $data['name'],
+                'is_admin'    => $data['is_admin'],
+                'description' => $data['description'],
+                'status'      => $data['status'],
+            ], function($query, $event, $cursor) use ($authorities) {
+                $cursor->menus()->sync($authorities);
+            });
         });
     }
 
     public function delete(array $data) {
-        return GroupsModel::deleteOne($this->encrypt->decode($data['id']), function($query, $event, $cursor) {
-            $cursor->menus()->detach();
+        $id = $this->encrypt->decode($data['id']);
+        return BaseModel::transaction(function() use ($id) {
+            return GroupsModel::deleteOne($id, function($query, $event, $cursor) {
+                $cursor->menus()->detach();
+            });
         });
     }
 
