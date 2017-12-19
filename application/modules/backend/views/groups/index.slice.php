@@ -75,14 +75,6 @@
         }
     });
 
-    // var __reloadTable = function(refresh) {
-    //     oTable.reload(refresh);
-    // }
-
-    // var __resetTable = function () {
-    //     oTable.filterReset();
-    // }
-
     initDatatableTools($('table#main-table'), $('#main-header'), oTable);
 
   })
